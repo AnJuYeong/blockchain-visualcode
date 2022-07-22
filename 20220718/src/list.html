@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리스트 페이지</title>
+</head>
+<body>
+    <table style="width: 100%">
+        <a href="/insert">추가 페이지</a>
+        <tr>
+            <th>삭제</th>
+            <th>수정</th>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>시리즈</th>
+        </tr>
+        <% data.forEach(function (el, index){ %>
+        <tr>
+            <th><a href="/delete/<%= el.id %>" >삭제</a></th>
+            <th>수정</th>
+            <th><%= el.id %></th>
+            <th><%= el.name %></th>
+            <th><%= el.number %></th>
+            <th><%= el.series %></th>
+        </tr>
+        <% }); %>
+    </table>
+</body>
+
+</html>
