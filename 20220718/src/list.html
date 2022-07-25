@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리스트 페이지</title>
+    <link rel="stylesheet" href="/css/1.css"/>
 </head>
 <body>
     <table style="width: 100%">
@@ -19,9 +20,10 @@
         </tr>
         <% data.forEach(function (el, index){ %>
         <tr>
+            <!-- <th><button type="button" class="delete-btn">삭제</button></th> -->
             <th><a href="/delete/<%= el.id %>" >삭제</a></th>
-            <th>수정</th>
-            <th><%= el.id %></th>
+            <th><a href="/edit/<%= el.id %>">수정</a></th>
+            <th class="idx"><%= el.id %></th>
             <th><%= el.name %></th>
             <th><%= el.number %></th>
             <th><%= el.series %></th>
@@ -29,5 +31,28 @@
         <% }); %>
     </table>
 </body>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+  const deleteBtns = document.querySelectorAll('.delete-btn');
+  deleteBtns.forEach((el) => {
+    el.addEventListener("click", () => {
+      const idx = el.parentElement.parentElement.querySelector('.idx').innerHTML;
+      
+      $.ajax({
+      type: "POST", //요청 메소드 방식
+      url:"/delete",
+      data:{idx},
+      success : function(_result){
+        console.log('완료');
+        window.location.reload();
+      },
+      error : function(a, b, c){
+        console.log('망함');
+      }
+    });
+    })
+  })
 
+
+</script>
 </html>

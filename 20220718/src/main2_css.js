@@ -22,6 +22,9 @@ const ejs = require("ejs");
 
 // console.log(ejs);
 
+// 절대경로 설정
+const path = require("path");
+
 // fs는 파일 읽기 쓰기를 쉽게 도와주는 모듈
 const fs = require("fs");
 
@@ -46,26 +49,12 @@ const temp = mysql.createConnection({
   user: "root",
   password: "1234",
   database: "test5",
-  // 다중쿼리문을 사용하려면 설정하는 옵션
-  // multipleStatements : 다중 쿼리문을 사용할 수 있도록 하는 옵션 true, false
-  multipleStatements: true,
 });
 
-// mysql에 테이블 만들기
 temp.query("SELECT * FROM products", (err, res) => {
   if (err) {
     const sql =
       "CREATE TABLE products(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(20), number VARCHAR(20), series VARCHAR(20))";
-    temp.query(sql);
-  } else {
-    // console.log(res);
-  }
-});
-
-temp.query("SELECT * FROM products2", (err, res) => {
-  if (err) {
-    const sql =
-      "CREATE TABLE products2(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(20), number VARCHAR(20), series VARCHAR(20))";
     temp.query(sql);
   } else {
     // console.log(res);
@@ -113,71 +102,24 @@ app.get("/", (req, res) => {
   });
 });
 
+// 절대경로의 시작점
+app.use(express.static(path.join(__dirname, "/")));
+// 경로에대한 약속
+app.use("/css", express.static(path.join(__dirname, "/style")));
+// 경로까지의 이름 약속 /css
+// C:\Users\KGA_019\Desktop\7월\3주차\718\src/style
+
+// a태그 사용한거.
 app.get("/delete/:id", (req, res) => {
-  // url요청해서 파라미터를 뽑을 수 있는데
-  // req요청의 값을 이용할 수 있다.
-  // params 매개변수
-  // http://localhost:4000/delete/1 이런 방식이면
-  // /delete/:id 이 주소에서 id가 params 키 값이고
-  // http://localhost:4000/delete/1 실제로 요청한 url의 /:id 이 자리에 있는 값이 value이다.
-  // {params:{id:1}} 그래서 이렇게 값을 받을 수 있다.
-  // console.log(req.params); 그래서 이렇게 값을 받을 수 있다.
-  // AUTO_INCREMENT도 같이 증가를 하고 값이 남아있는데
-  // 컬럼을 추가할 때 마다 id가 생성이 자동으로 되고 AUTO_INCREMENT도 증가를 했고
-  // UPDATE와 ALTER의 차이는 둘다 수정하는 명령어이긴 한데
-  // UPDATE(데이터 명령어)는 데이터 베이스의 관계에 저장된 데이터를 수정하는것.
-  // ALTER(데이터의 정의 명령어)는 데이터 베이스의 관계 구조를 수정하는데 사용된다.
+  const d = req.params;
+  // console.log(d);
   const sql = "DELETE FROM products WHERE(id = ?)";
-  const sql2 = "SET @CNT = 0;";
-  const sql3 = "UPDATE products SET products.id = @CNT:=@CNT+1;";
-  const sql4 = "ALTER TABLE products AUTO_INCREMENT = 0;";
-  temp.query(sql, [req.params.id], () => {
-    temp.query(sql2 + sql3 + sql4, () => {
-      res.redirect("/");
-    });
-  });
-});
-
-// 수정하는거 불러오는거
-app.get("/edit/:id", (req, res) => {
-  fs.readFile("src/edit.html", "utf-8", (err, data) => {
-    temp.query(
-      "SELECT * FROM products WHERE id = ?",
-      [req.params.id],
-      (err, result) => {
-        res.send(
-          ejs.render(data, {
-            data: result[0],
-          })
-        );
-      }
-    );
-  });
-});
-
-// 수정 클릭시 수정 해당 아이디 수정되도록
-// UPDATE `test5`.`products`
-// SET `name` = 'asd', `number` = '123', `series` = '6123' WHERE (`id` = '4');
-app.post("/edit/:id", (req, res) => {
-  const { name, number, series } = req.body;
-  const sql =
-    "UPDATE products SET name = ?, number= ?, series = ? WHERE id = ?;";
-  temp.query(sql, [name, number, series, req.params.id], () => {
+  temp.query(sql, [d.id], () => {
     res.redirect("/");
   });
 });
 
-// mysql 테이블 두개 불러오기
-// app.get("/test", (req, res) => {
-//   const sql = "SELECT * FROM products;";
-//   const sql2 = "SELECT * FROM products2;";
-//   temp.query(sql + sql2, (err, result) => {
-//     console.log(result[0]);
-//     console.log(result[1]);
-//   });
-// });
-
-// 아작스 사용(삭제)
+// 아작스 사용한거.
 // app.post("/delete", (req, res) => {
 //   const sql = "DELETE FROM products WHERE id= ?";
 //   console.log(req.body.idx);
