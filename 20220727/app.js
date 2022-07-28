@@ -47,6 +47,7 @@ app.get("/seats", (req, res) => {
 });
 
 io.sockets.on("connection",(socket) => {
+    console.log("유저가 접속함");
     socket.on("reserve",(data) => {
         seats[data.y][data.x] = 2;
         io.sockets.emit("reserve", data);

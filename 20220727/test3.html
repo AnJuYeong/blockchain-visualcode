@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        .line{
+            overflow: hidden;
+        }
+        .seat{
+            margin: 2px;
+            float: left;
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+        }
+        .enable{
+            background-color: gray;
+        }
+        .enable:hover{
+            background-color: rgb(195, 190, 190);
+        }
+        .disable{
+            background-color: blue;
+        }
+        </style>
+</head>
+<body>
+    <div>머한항공</div>
+    <a href="/seats1" id="1">1시</a>
+    <a href="/seats2" id="2">2시</a>
+    <a href="/seats3" id="3">3시</a>
+</body>
+<script>
+    const socket = io.connect();
+    socket.on("re3", (data) => {
+        let $target = $("div[data-x =" + data.x + "][data-y =" + data.y + "]");
+        $target.removeClass("enable");
+        $target.addClass("disable");
+    });
+
+    // 초기 좌석 생성
+    $(window).ready(function(){
+        // 좌석 클릭 함수
+        const onClickSeat = function(){
+            if($(this).hasClass("disable")){
+                return;
+            };
+            let x = $(this).attr("data-x");
+            let y = $(this).attr("data-y");
+            if(confirm("이 좌석을 예매 하시나요?")){
+                socket.emit("re3", {
+                    x,
+                    y,
+                });
+            } else{
+                alert("취소");
+            };
+        };
+        // 아작스 수행
+        $.getJSON("/seats3/1",{dummy : new Date().getTime()}, (data) =>{
+            $.each(data,(indexY, line) => {
+                let $line = $("<div></div>").addClass("line");
+                $.each(line, (indexX, seat) => {
+                    `
+                    <div class = "line">
+                        <div class = "seat" data-x = "indexX" data-y = "indexY"></div>
+                    </div>
+                    `;
+                    let $output = $("<div></div>", {
+                        class : "seat",
+                        // data-x랑 data-y 속성을 쓴 이유는 이벤트가 실행 했을 때
+                        // 좌석의 위치 정보를 알기 위해서
+                        "data-x" : indexX,
+                        "data-y" : indexY,
+                    }).appendTo($line);
+
+                    if(seat == 1){
+                        $output.addClass("enable").on("click",onClickSeat);
+                    }else if(seat == 2){
+                        $output.addClass("disable");
+                    }
+                });
+                $line.appendTo("body");
+            });
+        });
+    });
+</script>
+</html>
