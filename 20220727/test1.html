@@ -78,7 +78,9 @@
                         "data-x" : indexX,
                         "data-y" : indexY,
                     }).appendTo($line);
-
+                    if(seat != 0){
+                        $output.html("D1");
+                    }
                     if(seat == 1){
                         $output.addClass("enable").on("click",onClickSeat);
                     }else if(seat == 2){

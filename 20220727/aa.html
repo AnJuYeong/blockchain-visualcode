@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 1교시 시작 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화관 좌석 만들기</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <style>
+        .line{
+            overflow: hidden;
+        }
+        .seat{
+            margin: 2px;
+            float: left;
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+        }
+        .enable{
+            background-color: gray;
+        }
+        .enable:hover{
+            background-color: rgb(195,190,190);
+        }
+        .disable{
+            background-color: hotpink;
+        }
+    </style>
+</head>
+<body>
+    <div>영화관</div>
+    <select id="selectBtn">
+        <option value="0">1시</option>
+        <option value="1">2시</option>
+        <option value="2">3시</option>
+    </select>
+    <div id="content"></div>
+    <script>
+        const socket = io.connect();
+        
+        socket.on("reserve",(data)=>{
+            if(data.selectCount == selectBtn.selectedIndex){
+                // x y selectIndex 셋 다 있다                
+                let $target = $("div[data-x =" + data.x + "][data-y =" + data.y + "]");
+                $target.removeClass("enable");
+                $target.addClass("disable");
+            }
+        });
+        let selectCount = 0
+        $(window).ready(function(){
+            selectBtn.onchange = function() {
+                content.innerHTML = "";
+                selectCount = this.selectedIndex;
+                getseats(selectCount);
+            }
+
+            // 좌석을 클릭했을때
+            const onClickSeat = function () {
+                if($(this).hasClass("disable")){
+                    return;
+                }
+                let x = $(this).attr("data-x");// 이 속성이 있는지 판별하고 있으면 가져오고 없으면 추가하는 문구
+                let y = $(this).attr("data-y");
+                
+                if(confirm("이 좌석을 예매 하시나요?")){
+                    // yes를 눌렀을때
+                    socket.emit("reserve",{
+                        x,
+                        y,
+                        selectCount,
+                    });
+                }
+                else{
+                    // no를 눌렀을때
+                    alert("취소되었습니다.")
+                }
+            }
+            getseats(0);
+            function getseats(selectIndex){
+                $.getJSON("/seats/"+selectIndex , { dummy : new Date().getTime() }, (data)=>{
+
+                $.each(data,(indexY,line)=>{
+
+                    let $line = $("<div></div>").addClass("line");
+                    
+                    $.each(line,(indexX,seat)=>{
+                        `
+                        <div class="line">
+                             <div class="seat" data-x="indexX" data-y="indexY"></div>
+                        </div>
+                        `;
+                        let $output = $("<div></div>",{
+                            class : "seat",
+                            "data-x" : indexX,
+                            "data-y" : indexY,
+                        }).appendTo($line);
+
+                        if(seat == 1){
+                            $output.addClass("enable").on("click",onClickSeat);
+                        }
+                        else if(seat == 2){
+                            // 예약이 되어있는 좌석
+                            $output.addClass("disable");
+                        }
+                    });
+                    $line.appendTo(content);
+                });
+            });
+        }
+    });
+    </script>
+</body>
+</html>
