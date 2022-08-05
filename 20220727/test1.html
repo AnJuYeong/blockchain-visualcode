@@ -17,6 +17,7 @@
             width: 30px;
             height: 30px;
             border-radius: 3px;
+            text-align: center;
         }
         .enable{
             background-color: gray;
@@ -31,9 +32,9 @@
 </head>
 <body>
     <div>머한항공</div>
-    <a href="/seats1" id="1">1시</a>
-    <a href="/seats2" id="2">2시</a>
-    <a href="/seats3" id="3">3시</a>
+    <a href="/seats1" >1시</a>
+    <a href="/seats2" >2시</a>
+    <a href="/seats3" >3시</a>
 </body>
 <script>
     const socket = io.connect();
@@ -79,7 +80,8 @@
                         "data-y" : indexY,
                     }).appendTo($line);
                     if(seat != 0){
-                        $output.html("D1");
+                        let alphabet = ["a","b","c","d","e","f"];
+                        $output.html(alphabet[indexY]+indexX);
                     }
                     if(seat == 1){
                         $output.addClass("enable").on("click",onClickSeat);

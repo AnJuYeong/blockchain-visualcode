@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon teacher.js",
+    "start": "nodemon test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
