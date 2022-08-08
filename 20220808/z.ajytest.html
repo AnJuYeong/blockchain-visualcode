@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        padding: 0px;
+        margin: 0px;
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+    }
+    .content{
+        position: absolute;
+        width: 550px;
+        height: 50px;
+        padding-top: 26px;
+        /* border: 1px solid red; */
+        background-color:white;
+        border-radius: 30px;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .box{
+        position: absolute;
+        left: 700px;
+        top: 400px;
+        color: black;
+    }
+    #checkbox{
+        top: 0px;
+        width: 100%;
+        background-color: aliceblue;
+        height: 200px;
+        text-align: center;
+        display: none;
+    }
+    .checktext{
+        position: relative;
+        top: 150px;
+        display: flex;
+        left: 850px;
+    }
+</style>
+<body>
+    <div class="content">
+        <label for="">이름</label>
+        <input type="text" id="userId">
+        <label for="">비밀번호</label>
+        <input type="text" id="userPw">
+        <button id="login">로그인</button>
+        <button id="cookiedeleteBtn">쿠키삭제</button>
+    </div>
+    <div class="box">
+        <div id="userName"></div>
+        <div id="cookieAllView"></div>
+    </div>
+    <div id="checkbox">
+        <div>광고입니다.ㅎㅎ</div>
+        <div class="ac"></div>
+        <div class="checktext">
+            <div>하루동안 보지 않기</div>
+            <input type="checkbox" id="check"></input>
+            <button id="deleteBtn">닫기</button>
+        </div>
+    </div>
+</body>
+<script src="test.js"></script>
+<script>
+
+    login.onclick = function(){
+        sessionStorage.setItem("userId", userId.value);
+        let text = sessionStorage.getItem("userId");
+        userName.innerHTML = text + "님 어서오세요!!";
+    };
+
+    // let aa = isActiveCookie("ajy");
+    if(isActiveCookie("ajy") == false){
+        checkbox.style.display = "block";
+    } else if(isActiveCookie("ajy") == true){
+        checkbox.style.display = "none";
+    };
+
+    check.onclick = function(){
+        createCookie("ajy", "111", 1);
+        cookieAllView.innerHTML = document.cookie;
+    };
+
+    deleteBtn.onclick = function(){
+        let deletecookie = isActiveCookie("ajy");
+        if(deletecookie == true){
+            checkbox.style.display = "none";
+        } else {
+            checkbox.style.display = "none";
+        };
+    };
+
+    cookiedeleteBtn.onclick = function(){
+        isDeleteCookie("ajy");
+        console.log("ajy", "가 삭제 되었음");
+    };
+</script>
+</html>

@@ -85,10 +85,14 @@
             left: 350px;
         }
         #secretMain{
-            top: 70px;
+            /* top: 70px;
             left: 10px;
-            position: absolute;
-            display: flex;
+            position: absolute; */
+            /* display: flex; */
+        }
+        #usertext{
+            position: relative;
+            left: -15px;
         }
     </style>
 </head>
@@ -119,7 +123,8 @@
             <option value="개구리 방">개 방</option>
         </select>
         <div id="secretMain">
-            <input type="text" id="username">
+            <input type="text" id="usertext">
+            <input type="text" id="secretname">
             <button id="secretbtn">♥</button>
         </div>
     </div>
@@ -129,22 +134,46 @@
         loginbtn.onclick = function(){
             login.style.display = "none";
             main.style.display = "block";
+            const name = username.value;
             let room = rooms.options[rooms.selectedIndex].value;
-            const socket = io.connect;
+            // io.connect() 클라이언트가 접속하는 함수
+            const socket = io.connect();
             socket.emit("joinRoom", room, name);
-        };
+                
+            rooms.onchange = function(){
+                socket.emit("leaveRoom", room, name);
+                room = romms.options[rooms.selectedIndex].value;
+                socket.emit("joinRoom", room, name);
+            };
+            
+            socket.on("joinRoom",(room, name) => {
+                messages.innerHTML += `
+                <li class = "join_text">
+                    ${name}님이 ${room}에 들어오셨습니다.
+                    </li>
+                    `;
+            });    
 
-        socket.on("joinRoom",(room, name) => {
-            messages.innerHTML += `
-            <li class = "join_text">
-                ${name}님이 ${room}에 들어오셨습니다.
-            </li>
-            `;
-        });
+            socket.on("leaveRoom", (room, name) => {
+                messages.innerHTML += `
+                <li class = "leave_text">
+                     ${name}님 ${room}에서 나갔습니다.
+                </li>
+                `;
+            });
+                    
+            sendbtn.onclick = function(){
+                socket.emit("chat", room,name,msg.value);
+                msg.value = "";
+            };
 
-        rooms.onchange = function(){
-            let el = e.target;
-            socket.emit("leaveRoom", room, name);
+            socket.on("chat", (name,msg) => {
+                messages.innerHTML += `
+                <li>
+                    ${name} : ${msg}
+                </li>
+                `;
+            });
         };
     };
 </script>

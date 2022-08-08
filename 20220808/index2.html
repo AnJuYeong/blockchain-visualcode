@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="">이름</label>
+    <input type="text" id="user">
+    <label for="">비밀번호</label>
+    <input type="text" id="pw">
+    <button id="login">로그인</button>
+    <a href="/index3.html">이동</a>
+</body>
+<script>
+    login.onclick = function(){
+        // 세션에 저장 setItem() 매개변수 키,값
+        sessionStorage.setItem("userData", user.value);// 저장
+    };
+</script>
+</html>
