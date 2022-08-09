@@ -62,8 +62,8 @@ let getCookie = function(name){
     let value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
     // 있으면 값을 내보낸다.
     // 쿠키의 값이 있는 인덱스가 2번이라서 인덱스 값을 가져온다.
-    // console.log("cookie" + value[2]);
-    // console.log("cookie" + value[0]);
+    console.log("cookie" + value[2]);
+    console.log("cookie" + value[0]);
     return value ? value[2] : null;
 };
 
