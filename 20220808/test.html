@@ -39,7 +39,7 @@
         background-color: aliceblue;
         height: 200px;
         text-align: center;
-        display: none;
+        /* display: none; */
     }
     .checktext{
         position: relative;
@@ -76,25 +76,42 @@
 
     login.onclick = function(){
         sessionStorage.setItem("userId", userId.value);
-        let text = sessionStorage.getItem("userId");
-        userName.innerHTML = text + "님 어서오세요!!";
-    };
+        let user = sessionStorage.getItem("userId");
+        userName.innerHTML = user + "님 어서오세요!!";
+        // let checkCookie = isActiveCookie(user);
+        // if(checkCookie == false){
+        //     checkbox.style.display = "block";
+        // };
 
-    let aa = isActiveCookie(userId.value);
-    if(aa == false){
-        checkbox.style.display = "block";
-    };
-
-    check.onclick = function(){
-        createCookie(userId.value, userPw.value, 1);
-        cookieAllView.innerHTML = document.cookie;
-    };
-
-    deleteBtn.onclick = function(){
-        let deletecookie = isActiveCookie(userId.value);
+        // 이미 쿠키가 있다면 다시 로그인 버튼을 눌렀을 때 광고가 뜨지 않는다 
+        let deletecookie = isActiveCookie(sessionStorage.getItem("userId"));
         if(deletecookie == true){
             checkbox.style.display = "none";
         };
+    };
+
+    //체크박스 확인용 변수
+    let aa = 0;
+    check.onclick = function(){
+        if(aa == 0){
+            aa =1;
+        } else if(aa == 1){
+            aa = 0;
+        };
+        cookieAllView.innerHTML = document.cookie;
+    };
+    
+    deleteBtn.onclick = function(){
+        if(aa == 1){
+            let create = sessionStorage.getItem("userId");
+            createCookie(create, "1", 1);
+            let deletecookie = isActiveCookie(create);
+            if(deletecookie == true){
+                checkbox.style.display = "none";
+            };
+        } else if(aa == 0){
+            checkbox.style.display = "none";
+        }
     };
 
     window.onload = function(){
