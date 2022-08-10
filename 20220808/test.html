@@ -50,11 +50,13 @@
 </style>
 <body>
     <div class="content">
+        <form action="/userlogin" method="post">
         <label for="">이름</label>
-        <input type="text" id="userId">
+        <input type="text" id="userId" name="userId">
         <label for="">비밀번호</label>
-        <input type="text" id="userPw">
-        <button id="login">로그인</button>
+        <input type="text" id="userPw" name="userPw">
+            <button id="login" type="submit">로그인</button>
+        </form>
         <button id="cookiedeleteBtn">쿠키삭제</button>
     </div>
     <div class="box">
@@ -71,9 +73,61 @@
         </div>
     </div>
 </body>
-<script src="test.js"></script>
+<!-- <script src="test.js"></script> -->
 <script>
+// 쿠키 생성 함수   매개변수는 (이름, 값, 유효기간)
+let createCookie = function(name, value, time){
+    // date 객체를 생성해서 변수에 담고
+    let date = new Date();
+    // date객체의 시간을 설정하는데 setTime
+    // time에 값이 1이면 1일 하루
+    // date.getTime() 현재 시간에 time을 더하면
+    // 생성한 시간부터 1일이 지난 시간
+    date.setTime(date.getTime() + time * 24 * 60 * 60 * 1000);
+    //쿠키의 구조
+    // 키 = 값 문자열로 저장
+    // 객체 사용하는 것처럼 키로 접근해서 쿠키의 값을 가져온다.
 
+    // 쿠키의 경로(path)
+    // 도메인 하위로 하위 쿠키 경로를 지정할 수 있다.
+    // 쿠키 갯수가 적으면 거의 루트만 사용
+
+    // 만료일(expires)
+    // 만료일은 GMT 시간 문자열 쿠키는 삭제하는 기능이 없다.
+    // 이전 만료일을 지정해주면 만료되서 삭제 된다.
+    // 아예 무척 과거 시간을 지정해줘서 삭제 보안 문제나 개인정보 노출이 이슈이니깐
+    // 시간은 웬만하면 짧게 한... 1개월 ~ 3개월정도 추천
+    // 1년은 절대 넘기면 안된다. 민감한 데이터 유출 위험
+    // document.cookie
+    // toUTCString() 함수를 사용해서 Sat, 02 0ct 2021 15:50:50 GMT 이렇게 변경
+    // 쿠키이름 = 쿠키 값; expires = Sat, 02 0ct 2021 15:50:50 GMT; path=/
+    document.cookie = name + "=" + value + ";expries" + date.toUTCString() + ";path=/"
+};
+
+// 쿠키 값을 가져오는 함수
+let getCookie = function(name){
+    // 현재 저장된 쿠키중 name에 맞는 쿠키가 저장되어 있으면 
+    let value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+    // 있으면 값을 내보낸다.
+    // 쿠키의 값이 있는 인덱스가 2번이라서 인덱스 값을 가져온다.
+    // console.log("cookie" + value[2]);
+    // console.log("cookie" + value[0]);
+    return value ? value[2] : null;
+};
+
+// 쿠키 유무 확인 함수
+let isActiveCookie = function(key){
+    // 값이 있는지 없는지 빈문자열이 아니면 값이 있는것.
+    return getCookie(key) != null ? true : false;
+};
+
+// 쿠키 제거 함수
+let isDeleteCookie = function(key){
+    // key는 쿠키의 이름
+    // 쿠키 제거 기능은 없기에 제일 예전 날짜를 넣어줘서 자동으로 삭제되게 만든다.
+    document.cookie = key + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
+};
+// ==========================================
     login.onclick = function(){
         sessionStorage.setItem("userId", userId.value);
         let user = sessionStorage.getItem("userId");

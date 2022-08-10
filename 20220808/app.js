@@ -105,22 +105,22 @@ sessionStorage.key(0); // myItem
 // 쿠키는 삭제가 안되지만 세션은 삭제가 가능하다.
 sessionStorage.clear(); //전체 삭제
 
-const express = require("express");
-const socketio = require("socket.io");
-const fs = require("fs");
-const ejs = require("ejs");
+// const express = require("express");
+// const socketio = require("socket.io");
+// const fs = require("fs");
+// const ejs = require("ejs");
 const { send } = require("process");
 
-const app = express();
+// const app = express();
 
-const PORT = 4000;
+// const PORT = 4000;
 
-const server = app.listen(PORT, () => {
-    console.log(PORT,"서버가 열렸습니다.");
-});
+// const server = app.listen(PORT, () => {
+//     console.log(PORT,"서버가 열렸습니다.");
+// });
 
-app.get("/", (req,res) => {
-    fs.readFile("index.html", "utf-8", (err, data) => {
-        res.send(data);
-    });
-});
+// app.get("/", (req,res) => {
+//     fs.readFile("index.html", "utf-8", (err, data) => {
+//         res.send(data);
+//     });
+// });
