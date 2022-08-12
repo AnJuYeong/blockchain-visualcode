@@ -15,6 +15,7 @@ const secretkey = process.env.KEY;
 
 router.post("/login", (req,res) => {
     const name = "똥맛카레";
+    console.log("err");
     let token = jwt.sign(
         {
             // 타입 설정 타입은 JWT
@@ -35,6 +36,7 @@ router.post("/login", (req,res) => {
         token,
     };
     fs.readFile("view/page2.html", "utf-8", (err, data) => {
+        console.log(err);
         res.send(data);
     });
 });
