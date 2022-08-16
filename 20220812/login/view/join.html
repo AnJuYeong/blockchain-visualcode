@@ -7,9 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    첫페이지
-    <form action="/login" method="post">    
-        <button>사용자 로그인</button>
+    <!-- post 방식으로 요청을 하는데 요청 url은 /join -->
+    <form action="/join" method="post">
+        <input type="text" name="userId"/>
+        <input type="text" name="userPw"/>
+        <button>회원가입</button>
     </form>
 </body>
 </html>

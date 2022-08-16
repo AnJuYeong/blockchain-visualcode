@@ -36,7 +36,6 @@ router.post("/login", (req,res) => {
         token,
     };
     fs.readFile("view/page2.html", "utf-8", (err, data) => {
-        console.log(err);
         res.send(data);
     });
 });

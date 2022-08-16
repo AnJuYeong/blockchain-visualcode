@@ -52,6 +52,7 @@ const dot = require("dotenv");
 const cookie = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const { decode } = require("jsonwebtoken");
 
 // .env파일 사용하기 위해 설정
 dot.config();
@@ -107,7 +108,10 @@ app.post("/login", (req, res) => {
         );
         // 쿠키의 이름은 refresh 유효 시간은 하루
         res.cookie("refresh", refreshToken, { maxAge : 24 * 60 * 60 * 1000 });
-        return res.send(accessToken);
+        // fs에 readFile함수를 사용해서 join.html 불러온다. res의 send 함수로 응답
+        fs.readFile("view/join.html", "utf-8", (err,data) => {
+            res.send(accessToken + data);
+        });
     }
     else{
         return res.send("아이디 비밀번호 오류");
@@ -119,11 +123,42 @@ app.post("/refresh", (req, res) => {
     // req.cookie?.refresh refresh 키값이 없어도 크래쉬 방지
     if(req.cookies?.refresh){
         const refreshToken  = req.cookies.refresh;
-    } else{
+        // refresh token이 정상인지 확인
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY,(err,decode) => {
+            // err가 있으면 refresh token이 썩었기 때문에 다시 로그인 시킨다.
+            if(err){
+                res.send("로그인을 다시 해주세요");
+            } else{
+                // err가 없고 정상적인 토큰이면 다시 access token 발급
+                // jwt에 .sign함수로 토큰 다시 생성
+                const accessToken = jwt.sign(
+                    {
+                    // 토큰의 payload 값들
+                    id : user.id,
 
+                    }, 
+                    // 토큰을 암호화 시킬 키 값
+                    process.env.ACCESS_TOKEN_KEY,
+                    {
+                        // 토큰의 유효시간 10분
+                        expiresIn: "10m"
+                    }
+                );
+                res.send(accessToken);
+            }
+        });
+    } else{
+        res.send("다시 로그인 해주세요");
     }
 });
 
 app.listen(3000, () => {
     console.log("서버열림");
 });
+
+// access token을 왜 짧게하고 새로 로그인정보를 갱신해줄까?
+// 해커가 악의적으로 access token을 얻었을 때 로그인이 이미 되어있는 상태라
+// 막기가 힘들어서 access token의 유효기간을 짧게하고 refresh token의 유효기간을
+// 길게해서 사용자가 로그인을 자주하는 불편함을 보완해준다.
+// 그리고 악의적으로 탈취된 access token을 갱신해주는 역할도 해준다.
+// refresh token을 다시 확인 시켜서.
