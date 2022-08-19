@@ -42,20 +42,20 @@ sequelize.sync({force : false}).then(() => {
 // Op.in (in, 배열 요소 중 하나),
 // Op.notIn (not in, 배열 요소와 모두 다름) 등이 있다.
 
-async function select(){
-   const user = await User.findAll({
-    where : {
-        age : {[Op.gt]: 24},
-        // 나이 24 초과 또는 안주영 이름 가진 거 뽑기
-        [Op.or]: [{age : {[op.gt] : 24}},{ name : "안주영"}],
-    },
-    order : [["age","DESC"]],
-    // limit : 1,
-    // offset : 1,
-   });
-   const temp = user.map((i)=> i.dataValues);
-   console.log(temp);
-}
+// async function select(){
+//    const user = await User.findAll({
+//     where : {
+//         age : {[Op.gt]: 24},
+//         // 나이 24 초과 또는 안주영 이름 가진 거 뽑기
+//         [Op.or]: [{age : {[op.gt] : 24}},{ name : "안주영"}],
+//     },
+//     order : [["age","DESC"]],
+//     // limit : 1,
+//     // offset : 1,
+//    });
+//    const temp = user.map((i)=> i.dataValues);
+//    console.log(temp);
+// }
 
 // findOne은 구성은 같고 하나만 데이터를 가져온다.
 // findOne은 검색조건을 사용해서 쓰자.
