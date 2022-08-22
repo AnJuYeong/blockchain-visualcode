@@ -103,6 +103,43 @@ app.post("/create_post", (req,res) => {
     })
 });
 
+app.get("/view/:name", (req, res) => {
+    User.findOne({
+      where: {
+        name: req.params.name,
+      },
+      include: [
+        {
+          model: Post,
+        },
+      ],
+    }).then((e) => {
+      e.dataValues.Posts = e.dataValues.Posts.map((i) => i.dataValues);
+      const Posts = e.dataValues;
+      //console.log(e.dataValues);
+      res.render("view", { data: Posts });
+    });
+  });
+  
+  app.post("/view_updata", (req, res) => {
+    const { id, msg, text } = req.body;
+    console.log(id, msg, text);
+    Post.update(
+      { msg: text },
+      {
+        where: { id: id, msg: msg },
+      }
+    );
+  });
+  
+  app.get("/del/:id", (req, res) => {
+    Post.destroy({
+      where: { id: req.params.id },
+    }).then(() => {
+      res.redirect("/user");
+    });
+  });
+
 // 서버 연결
 app.listen(3000, () => {
     console.log("열렸다.")

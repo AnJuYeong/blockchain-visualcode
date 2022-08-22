@@ -15,7 +15,7 @@
             <li class="item">
                 <span class="name"><%= user.name%></span>님 <%= user.age %>살 코멘트: <%= user.msg %>
                 <input type="text" class="text"><button class="item-btn">글 등록</button>
-                <a href="">등록글 보러가기</a>
+                <a class="view-btn" href="/view/<%= user.name %>">등록글 보러가기</a>
             </li>
         <% }) %>
     </ul>
@@ -23,6 +23,7 @@
 <script>
     // dom이 모두 생겼을 때 
     window.onload = function(){
+        // 모든 item클래스가 붙은 태그 가져오고
         let items = document.querySelectorAll(".item");
         // 갯수만큼 반복시켜서
         items.forEach((e) => {
