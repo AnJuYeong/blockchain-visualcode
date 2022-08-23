@@ -104,38 +104,59 @@ app.post("/create_post", (req,res) => {
 });
 
 app.get("/view/:name", (req, res) => {
+    // 해당 유저를 이름을 조회하고
     User.findOne({
       where: {
+        // 조건문 누구 찾을건지
+        // params로 전달받은 name 키 값에 있는 벨류로 검색 이름을
         name: req.params.name,
       },
+      // 리턴값을 단일객체로 변형해서 보여준다.
+      // raw : true,
+
+      // 관계형 모델 불러오기
+      // 관계를 맺어놓은 모델을 조회할 수 있다.
+      // 여기서는 해당 검색된 유저와 맞는 모델
+      // user 모델의 id가 1번이면 post모델의 user_id키가 같은 애들을 조회
       include: [
         {
+          // post 모델이 조회 되었으면 하니깐 post 모델 써줌
           model: Post,
         },
       ],
     }).then((e) => {
+      // console.log(e);
       e.dataValues.Posts = e.dataValues.Posts.map((i) => i.dataValues);
       const Posts = e.dataValues;
-      //console.log(e.dataValues);
+      console.log(Posts);
       res.render("view", { data: Posts });
     });
   });
   
   app.post("/view_updata", (req, res) => {
     const { id, msg, text } = req.body;
-    console.log(id, msg, text);
+    // console.log(id, msg, text);
+    // 수정 쿼리문 사용
+    // 객체가 들어가는데 
+    // 첫번째 매개변수에 객체가 수정할 내용
+    // 두번째 매개변수가 객체가 검색조건
+    // 밑에 검색 조건 내용은 아이디와 메세지 둘다 검색해서 맞는 애 탐색
     Post.update(
-      { msg: text },
+      { msg: msg },
       {
-        where: { id: id, msg: msg },
+        where: { id: id, msg: text },
       }
     );
   });
   
   app.get("/del/:id", (req, res) => {
+    // 삭제 쿼리문
+    // 매개변수 객체 내용은 검색 조건
     Post.destroy({
+      // 검색은 전달 받은 params의 안에 있는 id 키 값
       where: { id: req.params.id },
     }).then(() => {
+      // 잘 끝나면 유저 페이지로 이동
       res.redirect("/user");
     });
   });

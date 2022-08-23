@@ -75,6 +75,11 @@
         #main{
             display: none;
         }
+
+        .test {
+            font-weight: 900;
+            color: green
+        }
     </style>
 </head>
 <body>
@@ -144,7 +149,7 @@
 
             socket.on("chat", (name,msg) => {
                 messages.innerHTML += `
-                <li>
+                <li class="test">
                     ${name} : ${msg}
                 </li>
                 `;
