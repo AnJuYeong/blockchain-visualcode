@@ -25,6 +25,7 @@ class mainNav {
     this.subMission = document.querySelector('.submission');
     this.callBtn = document.querySelector(".call-btn");
     this.liveBtn = document.querySelector(".live-btn");
+    this.twoBtn = document.querySelector(".tow-btn");
     // 제출버튼 백그라운드 색상 배열
     this.colors = ["green", "pink", "gray", "orange", "tomato", "rgb(204, 204, 255)"];
     // 아직 미구현 채팅창 카운터
@@ -38,6 +39,12 @@ class mainNav {
     this.index = 0;
     this.init();
   }
+  // 처음 인풋 막기
+  aa() {
+    console.log(this);
+    alert("실시간 채팅을 눌러주세요.");
+    this.readOnly = true;
+  }
   init() {
 
     // 챗봇박스는 일단 먼저 꺼둔다.
@@ -47,25 +54,16 @@ class mainNav {
     // js에서 먼저 설정해줘야함
     this.remocon.style.opacity = "0";
     this.remocon.style.visibility = "hidden";
-    this.chatRobot.style.display = "none";
-
-    // 제출버튼 클릭시 버튼색 바뀜
-    this.subMission.addEventListener("click", () => {
-      let random = Math.floor(Math.random() * 6);
-      this.subMission.style.background = this.colors[random];
-      alert("기다려라 ㅋ.");
-    });
-    // 전화상담버튼
-    this.callBtn.addEventListener("click", () => {
-      setTimeout(() => {
-        this.chatRobot.style.display = "block";
-      }, 500);
-    });
+    // this.chatRobot.style.display = "none";
 
     // socketio
     const socket = io.connect();
+        //관리자 계정 ㅋ
+        const admin = "admin";
+        // 초기 계정
+        const users = 0;
 
-    // 유저가 대화창 기능
+    // 소켓 (유저 텍스트 추가)
     socket.on("to-message",(data) => {
       this.chatBox.innerHTML += `
       <div class="chat-p">
@@ -75,14 +73,122 @@ class mainNav {
       this.chatInput.value = null;
       this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
     });
+
+    // 인풋에 이벤트
+    this.chatInput.addEventListener("click", this.aa);
+
+    // 유저 채팅 소켓 이벤트
     this.chatInput.addEventListener("keydown", (e) => {
       if (e.keyCode == 13 && this.keypressNumber == 0) {
+
         socket.emit("message", {
           message : this.chatInput.value,
+          name : users,
         });
       }
     });
+
+    // 전화상담 버튼 소켓
+    socket.on("callChat2", () => {
+      const chat = document.createElement("div");
+      chat.classList.add("chat-robot");
+      chat.innerHTML = "연락처를 남겨주시면 상담원이 연락 드립니다.";
+      
+      const chatName = document.createElement("div");
+      chatName.innerHTML = "이름";
+      
+      const inputName = document.createElement("input");
+      inputName.setAttribute("type","text");
+      inputName.setAttribute("placeholder","정확하게 입력해주세요");
+      
+      const chatNumber = document.createElement("div");
+      chatNumber.innerHTML = "휴대폰 번호";
+      
+      const inputNumber = document.createElement("input");
+      inputNumber.setAttribute("type","text");
+      inputNumber.setAttribute("placeholder","정확하게 입력해주세요");
+      
+      const submit = document.createElement("div");
+      submit.classList.add("submission");
+      submit.innerHTML="제출하기";
+      
+      chat.appendChild(chatName);
+      chat.appendChild(inputName);
+      chat.appendChild(chatNumber);
+      chat.appendChild(inputNumber);
+      chat.appendChild(submit);
+      this.chatBox.appendChild(chat);
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+          submit.addEventListener("click", () => {
+            const random = Math.floor(Math.random() * 6);
+            submit.style.background = this.colors[random];
+            alert("기다려라 ㅋ.");
+          });
+    });
+
+    socket.on("liveChat2",() => {
+      const chat = document.createElement("div");
+      chat.classList.add("lcn");
+      chat.innerHTML = "실시간 상담을 위해 이름을 입력해주세요.";
+      
+      const liveChatName = document.createElement("input");
+      liveChatName.setAttribute("type","text");
+      liveChatName.setAttribute("placeholder","정확하게 입력해주세요");
+
+      const liveSubmit = document.createElement("div");
+      liveSubmit.classList.add("submission");
+      liveSubmit.innerHTML="제출하기";
+      
+      chat.appendChild(liveChatName);
+      chat.appendChild(liveSubmit);
+      this.chatBox.appendChild(chat);
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+      let bb;
     
+      liveSubmit.addEventListener("click", () => {
+        bb = liveChatName.value;
+        liveChatName.value = null;
+        const random = Math.floor(Math.random() * 6);
+        liveSubmit.style.background = this.colors[random]; 
+        // 관리자 인지 찾기 관리자면 이벤트 연결
+        if(bb === admin){
+          socket.emit("admin",{
+            name : admin,
+          });
+        }
+      });
+    });
+    
+    // 관리자 챗
+    socket.on("admin-message",(data) => {
+      this.chatBox.innerHTML += `
+      <div class="chat-p">
+      ${data.message}
+      </div>
+      `;
+      this.chatInput.value = null;
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+    });
+
+
+    // 전화상담 버튼 누르면 
+    this.callBtn.addEventListener("click", () => {
+      setTimeout(() => {
+      socket.emit("callChat", {});
+    }, 500);
+    });
+    // 실시간 상담 누르면
+    this.liveBtn.addEventListener("click",() => {
+      // 처음 인풋 막은거 다시 풀기.
+      this.chatInput.removeEventListener("click", this.aa);
+      this.chatInput.readOnly = false;
+      alert("5초 뒤 상담원과 연결됩니다.");
+      setTimeout(() => {
+        socket.emit("liveChat",{});
+      }, 500);
+    });
+
+
     // 챗봇 모달창 클릭기능
     this.chatIcon.addEventListener("click", () => {
       if (this.chatBotTag.style.display === "none") {
@@ -92,19 +198,14 @@ class mainNav {
       }
     });
 
-    
-
-
+  
     window.addEventListener("click", (e) => {
       let targetClass = e.target.className;
       switch (targetClass) {
         case "chat-delete":
           if (this.chatBotTag.style.display === "block") {
             this.chatBotTag.style.display = "none";
-            this.chatP.innerHTML = null;
-            this.chatRobot.style.visibility = "hidden";
-            this.remocon.style.visibility = "visible";
-            this.subMission.style.background = "rgb(204, 204, 255)";
+            this.remocon.style.visibility = "block";
           }
           break;
         case "sign-up-delete":

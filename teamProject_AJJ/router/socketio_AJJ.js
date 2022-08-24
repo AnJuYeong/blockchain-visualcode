@@ -8,7 +8,7 @@ const mysql = require("mysql2");
 const path = require("path");
 
 const app = express();
-const PORT = 8282;
+const PORT = 3000;
 const server = app.listen(PORT, () => {
   log("localhost:", PORT);
 });
@@ -38,10 +38,25 @@ app.get("/", (req, res) => {
     res.render("main_AJJ");
 });
 
-
-
-io.sockets.on("connection",  (socket) => {
+// 유저의 실시간 채팅
+io.sockets.on("connection", (socket) => {
+    console.log("새로운 유저 : ", socket.id);
+    // 유저의 실시간 채팅
     socket.on("message", (data) => {
         socket.emit("to-message", data);
+    });
+    // 유저의 전화상담
+    socket.on("callChat", () => {
+        socket.emit("callChat2", () => {
+        });
+    });
+    // 유저의 실시간 상담
+    socket.on("liveChat", () => {
+        socket.emit("liveChat2", () => {
+        });
+    });
+    // 관리자 채팅
+    socket.on("admin",(data) => {
+        socket.emit("admin-message",data);
     });
 });
