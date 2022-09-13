@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let apple = [];
+    function base10Tostring(n) {
+        if (n <= 1){
+            apple.push(1);
+            let aa = apple.reverse();
+            return aa.join("");
+        } else{
+            if(n % 2 == 0){
+                apple.push(0);
+                let num = n/2;
+                return base10Tostring(num);
+            } else if(n % 2 == 1){
+                apple.push(1);
+                let num = n/2;
+                return base10Tostring(Math.floor(num));
+            }
+        }
+    }
+    console.log(base10Tostring(100));
+</script>
+</html>
