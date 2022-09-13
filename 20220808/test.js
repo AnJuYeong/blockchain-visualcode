@@ -1,4 +1,3 @@
-
 const express = require("express");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
@@ -52,7 +51,11 @@ app.post("/userlogin", (req,res) => {
             issuer : "안주영",
         }
     );
+    let token2 = 2
     req.session.key = token
+    req.cookies.key = token2 
+
+    console.log(req);
     let data = {
         msg : "유저 정보",
         token,
