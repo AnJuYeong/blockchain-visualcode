@@ -8,6 +8,7 @@ const path = require("path");
 // 이렇게 폴더 경로까지만 잡으면 index 탐색 찾은 index파일을 (기본을 가져옴)
 // 이름이 index여야만 한다.
 const {sequelize, User, Post} = require("./model");
+const { raw } = require("express");
 
 // 서버 객체 만들고
 const app = express();
@@ -77,6 +78,7 @@ app.get("/user",(req,res) => {
     // 조회를 하는데 전체를 조회해야 한다.
     // findAll 전체를 찾는다.
     User.findAll({}).then((e) => {
+      console.log(e);
         res.render("page",{ data : e });
     }).catch(() => {
         res.render("err");
@@ -96,7 +98,7 @@ app.post("/create_post", (req,res) => {
         Post.create({
             msg : text,
             // foreignKey가 자식요소이다.
-            // foreignKey는 user_id 이거고 유저의 아이디와 연결한다고 정의를 해놓았기 때문에 
+            // foreignKey는 user_id 이거고 유저의 아이디와 연결한다고 정의를 해놓았기 때문에
             // 말해놓았다 user.js와 post.js에 만든 모델에 
             user_id : e.id,
         });
