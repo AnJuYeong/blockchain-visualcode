@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // function primeFactor(n){
+    //     let apple = [];
+    //     let i = 2;
+    //     while (i <= n){
+    //         if(n % i == 0)
+    //         apple.push(i);
+    //         i++;
+    //     }
+    //     apple.pop();
+    //     return apple;
+    // }
+    function primeFactor(n){
+        let apple = [];
+        let aa;
+        let i = 2;
+        while (i <= n){
+            if(n % i == 0){
+                apple.push(i);
+                for(let j = 0; j <= i; j++){
+                    if(i % j == 0){
+                    }
+                }
+            }
+            i++;
+        }
+        apple.pop();
+        return apple;
+    }
+    // console.log(primeFactor(10));
+    // console.log(primeFactor(12));
+    console.log(primeFactor(20));
+    console.log(primeFactor(18));
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="one">one</div>
+    <div id="two">two</div>
+    <script>
+        const one = document.getElementById("one");
+        
+        one.addEventListener("click", function (){
+            const two = document.getElementById("two");
+            if(two == null){
+                return;
+            }else{
+                two.remove();
+                console.log(two);
+            }
+        })
+    </script>
+</body>
+</html>
