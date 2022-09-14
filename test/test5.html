@@ -11,33 +11,13 @@
 </body>
 <script>
     function swap(strArr, idx1, idx2){
-        console.log(strArr);
-        let apple = [];
-        if(strArr == "1"){
-            apple.push(strArr);
-            apple.push(idx2);
-            apple.push(idx1);
-            console.log(apple);
-            permute(apple[0],apple[1],apple[2]);
-        }
-        if(strArr == "2"){
-            apple[0] = strArr;
-            apple[1] = idx2;
-            apple[2] = idx1;
-            console.log(apple);
-            swap()
-        }
+
     }
     function permute(strArr, begin, end){
-        let banana = [];
-        banana.push(end);
-        banana.push(strArr);
-        banana.push(begin);
-        console.log(banana);
-        swap(banana[0],banana[1],banana[2]);
+
     }
     function premuteArray(strArr){
-        swap(strArr[0],strArr[1],strArr[2])
+        console.log(strArr.length);
     }
     premuteArray(["1","2","3"]);
 </script>
