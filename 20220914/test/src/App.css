@@ -1,0 +1,90 @@
+/* .com{
+  width: 200px;
+  height: 200px;
+  border: 1px solid indianred;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.App{
+  position: relative;
+  top: 200px;
+  left: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 505px;
+  border: 1px solid black;
+}
+.days{
+  width: 70px;
+  height: 70px;
+  border: 1px solid gray;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.none{
+  border: 1px solid white;
+}
+
+.d{
+  background-color: oldlace;
+  border: 1px solid white;
+  border-radius: 0%
+}
+.title{
+  width: 100%;
+  text-align: center;
+  font-size: 70px;
+}
+.sun{
+  color: red;
+} */
+/* ㅜ 유튜브 대충 만들어보기 */
+
+.App{
+  position: relative;
+  top: 200px;
+  left: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 715px;
+  border: 1px solid black;
+}
+.date{
+  height: 100px;
+  width: 100px;
+  background-color: oldlace;
+  border: 1px solid white;
+  border-radius: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+}
+.total-number{
+  display: flex;
+  flex-wrap: wrap;
+}
+.number{
+  width: 100px;
+  height: 100px;
+  border: 1px solid gray;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title{
+  width: 100%;
+  text-align: center;
+  font-size: 70px;
+}
+.sic{
+  border: 1px solid white;
+}
+.sun{
+  color: red;
+}
