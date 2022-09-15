@@ -9,3 +9,6 @@ const ejs = require("ejs");
 const session = require("express-session");
 const sql = require("sequelize");
 const path = require("path");
+
+// 서버 만들기
+const app = express();
