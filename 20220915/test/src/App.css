@@ -1,23 +1,39 @@
-/* .block{
-  width: 100px;
-  height: 100px;
-  border: 1px solid;
-  font-size: 55px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-.game{
+.App{
+  position: relative;
+  top: 100px;
+  left: 400px;
   width: 510px;
+  height: 510px;
+  border: 1px solid;
   display: flex;
   flex-wrap: wrap;
 }
-.bomb{
+.all{
   width: 100px;
   height: 100px;
   border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20%;
 }
-.bb{
-  /* background-color: indianred; */
-  background-image: url(/src/img/bomb.jpg);
+.game{
+  position: relative;
+  top: 50px;
+  left: 550px;
+}
+
+.bomb{
+
+}
+.pass{
+
+}
+
+.realbomb{
+  background-image: url("./img/응가.png");
+  background-size: cover;
+}
+.realpass{
+  background-color: brown;
 }
