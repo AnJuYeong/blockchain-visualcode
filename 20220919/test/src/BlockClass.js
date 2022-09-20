@@ -65,9 +65,9 @@ export default class BlockClass extends Component {
         // class 컴포넌트에서 state 값을 변하게 하고 싶으면 setState() 함수를 이용해서 값을 수정한다.
         // setState 함수의 매개변수 안에 객체에서 바꾸고 싶은 키와 값을 넣어준다.
 
-        this.setState({num:this.state.num + 1});
+        // this.setState({num:this.state.num + 1});
         // 객체의 값을 추가해주면 여러 state 값을 수정할 수 있다.
-        // this.setState({num:this.state.num + 1, name: "hi"})
+        this.setState({num:this.state.num + 1, name: "hi"})
         // console.log(this.state);
     }
 
@@ -80,7 +80,7 @@ export default class BlockClass extends Component {
         {/* 함수를 전달 할 때도 하나의 클래스 안에 있기 때문에 this.add로 함수를 넣어줘야한다. */}
         <button onClick={this.add}>바꾸기</button>
         {/* props값을 사용해보자 부모 컴포넌트에서 받아서 */}
-        <div>{this.props.test}</div>
+        <div>{this.state.num}</div>
       </div>
     )
   }

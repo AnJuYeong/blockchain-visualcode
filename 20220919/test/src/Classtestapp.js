@@ -7,7 +7,7 @@ export default class Classtestapp extends Component {
     constructor(props){
 
         super(props)
-            this.state = {
+            this.select = {
                 scissors : {
                     name : "가위",
                     img : img01
@@ -22,12 +22,16 @@ export default class Classtestapp extends Component {
                 }
             }
     }
+    add = (play) => {
+      console.log(play);
+    }
   render() {
-
-
-
     return (
-      <div></div>
+      <div>
+        <button onClick={() => {this.add("scissors")}}>가위</button>
+        <button onClick={() => {this.add("rock")}}>바위</button>
+        <button onClick={() => {this.add("paper")}}>보</button>
+      </div>
     )
   }
 }

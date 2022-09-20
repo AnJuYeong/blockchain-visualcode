@@ -1,5 +1,5 @@
 import './App.css';
-// import BlockClass from './BlockClass';
+import BlockClass from './BlockClass';
 // import BlockFn from './BlockFn';
 import {img01, img02, img03} from "./img";
 import Block from './Block';
@@ -90,8 +90,9 @@ function App() {
   return (
     <div>
       <div className="App">
-        <Block data={userSelect} name="user" test={result}/>
-        <Block data={comSelect} name="com" test={result}/>
+        {/* <Block data={userSelect} name="user" test={result}/>
+        <Block data={comSelect} name="com" test={result}/> */}
+        <BlockClass/>
       </div>
       <div>
         <button onClick={() => {userClick("scissors")}}>가위</button>
