@@ -1,10 +1,14 @@
 import './App.css';
-// import {Body,Header} from "";
+import {Routes, Route , Navigate} from 'react-router-dom';
+import {Main, Login} from './page';
 
 function App() {
   return (
     <div className="App">
-      <div>gdgd</div>
+      <Routes>
+        <Route path="/" element={<Main/>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
     </div>
   );
 }

@@ -1,0 +1,40 @@
+.navbar{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background-color: black;
+}
+.logo{
+    position: absolute;
+    left: 100px;
+    font-size: 35px;
+    color: white;
+}
+.menu{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 50px;
+}
+.bar{
+    position: relative;
+    right: 40px;
+}
+.menu-bar{
+    display: flex;
+    list-style: none;
+    font-size: 15px;
+}
+.menu-list{
+    padding-left: 60px;
+    color: white;
+}
+.modal-icon{
+    color: white;
+    cursor: pointer;
+}
+.modal-icon :hover{
+
+}

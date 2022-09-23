@@ -1,9 +1,14 @@
 import React from 'react'
+import {Body, Header} from "../com";
+import {Link,useNavigate} from 'react-router-dom'
 
-const main = () => {
+const Main = () => {
   return (
-    <div>main</div>
+    <>
+    <Header title="메인페이지"></Header>
+    <Body></Body>
+    </>
   )
 }
 
-export default main
+export default Main
