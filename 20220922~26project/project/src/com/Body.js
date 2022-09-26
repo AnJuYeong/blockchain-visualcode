@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Body = () => {
+const Body = ({props}) => {
   return (
-    <div>
-        
+    <div className={props}>
     </div>
   )
 }

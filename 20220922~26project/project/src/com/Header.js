@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { FaAngry, FaUserAlt } from "react-icons/fa"
+import { Link,  } from 'react-router-dom';
 
-const Header = ({title}) => {
+const Header = ({userId,userName}) => {
+  console.log(userId);
+  console.log(userName);
   let [list,setList] = useState("");
 
-  let menuList = [<li className='menu-list'>게시판</li>,
-            <li className='menu-list'>마이페이지</li>,
-            <li className='menu-list'>회원가입</li>,
-            <li className='menu-list'>로그인</li>]
+  let menuList = [<li className='menu-list'><Link to={"/notice"} className='link'>게시판</Link></li>,
+            <li className='menu-list'><Link to={"/mypage"} className='link'>마이페이지</Link></li>,
+            <li className='menu-list'><Link to={"/signup"} className='link'>회원가입</Link></li>,
+            <li className='menu-list'><Link to={"/login"} className='link'>로그인</Link></li>];
 
   function on() {
     if(list === ""){
@@ -19,7 +22,7 @@ const Header = ({title}) => {
 
   return (
     <div className='navbar'>
-      <div className='logo'><FaAngry/>JoSS</div>
+      <div className='logo'><FaAngry/>Justagram</div>
       <div className='menu'>
         <div className='bar'>
         <ul className='menu-bar'>
