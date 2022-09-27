@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { FaAngry, FaUserAlt } from "react-icons/fa"
 import { Link,  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const Header = ({userId,userName}) => {
-  console.log(userId);
-  console.log(userName);
+const Header = () => {
+  let nav = useNavigate();
   let [list,setList] = useState("");
 
   let menuList = [<li className='menu-list'><Link to={"/notice"} className='link'>게시판</Link></li>,
@@ -19,10 +19,13 @@ const Header = ({userId,userName}) => {
       setList("");
     }
   }
+  const main = () => {
+    nav("/");
+  }
 
   return (
     <div className='navbar'>
-      <div className='logo'><FaAngry/>Justagram</div>
+      <div className='logo' onClick={main}><FaAngry/>Justagram</div>
       <div className='menu'>
         <div className='bar'>
         <ul className='menu-bar'>
