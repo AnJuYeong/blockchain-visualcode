@@ -20,6 +20,7 @@ function App() {
  // props를 받는데 to 한개 주면 된다. 보내주고 싶은 경로 
   const[ login, setLogin] = useState(false);
   // 로그인이 안됬으면 메인페이지로 보내버린다. 경로를 
+  console.log(login);
   const Redirect = () => {
     return login == true ? <MyPage/> : <Navigate to ="/" /> 
   }
