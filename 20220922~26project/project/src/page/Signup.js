@@ -17,7 +17,7 @@ const Signup = ({signin,usernick,signinpw}) => {
     userPw = e.target.value;
   }
 
-  const signinUp = () => {
+  const signinBtn = () => {
     signin(userId);
     usernick(userNickName);
     signinpw(userPw);
@@ -36,7 +36,7 @@ const Signup = ({signin,usernick,signinpw}) => {
               <input onChange={signinId} className='signin-input' type="text" placeholder='사용하실 ID 입력' />
               <input onChange={signinPw} className='signin-input' type="text" placeholder='사용하실 PW 입력'/>
                 <div className='signin-btn-box'>
-                <Link onClick={signinUp} to={"/"} className="signin-btn">가입하기</Link>
+                <Link onClick={signinBtn} to={"/"} className="signin-btn">가입하기</Link>
                 </div>
               </div>
             </div>
