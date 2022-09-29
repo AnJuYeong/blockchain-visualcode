@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import { Header,Body } from '../com'
 import { Link } from 'react-router-dom'
 
-const Signup = ({signin,usernick,signinpw}) => {
+const Signup = ({signin, usernick, signinpw, loginResult}) => {
   let userId = "";
   let userNickName = "";
   let userPw = "";
@@ -24,7 +24,7 @@ const Signup = ({signin,usernick,signinpw}) => {
   }
   return (
     <div>
-      <Header></Header>
+      <Header loginResult={loginResult}></Header>
       <div className='signin-main'>
         <div className='aa'>
           <div className='signin-photo'></div>
