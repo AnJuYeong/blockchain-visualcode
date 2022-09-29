@@ -4,10 +4,10 @@ import {Main, Login, Mypage, Notice, Signup} from './page';
 import { useState } from 'react';
 
 function App() {
-  // 회원가입시 유저 아이디와 유저 이름을 받는다.
+  // 회원가입시 유저 아이디와 유저 이름을 받을 useState
   let [username, setUsername] = useState("");
-  let [signin, setSignin] = useState("");
-  let [signinPw, setSigninPw] = useState("");
+  let [signin, setSignin] = useState(1);
+  let [signinPw, setSigninPw] = useState(1);
 
   // let userData = {
   //   username : {
@@ -16,29 +16,18 @@ function App() {
   //   }
   // }
   // console.log(userData);
-  // 로그인시 유저 아이디를 받아온다.
-  let [loginId, setLoginId] = useState(false);
-  let [loginPw, setLoginPw] = useState(false);
+
   // 회원가입하고 유저가 로그인하면 검증이 완료 됐다고 알려줄 useState
-  let [popo, setPopo] = useState(false);
+  let [loginResult, setLoginResult] = useState(false);
 
-  // if((signin == loginId) && (signinPw == loginPw)){
-  //   setPopo(true);
-  // } else{
-  //   setPopo(false);
-  // }
-
-  // const myPageOpen = () => {
-  //   return popo == true ? <Mypage isusername={username}/> : <Navigate to = "/"/>
-  // }
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Main isusername={username} />}/>
-        <Route path="/login" element={<Login loginid={setLoginId} loginpw={setLoginPw} />}/>
-        <Route path="/signup" element={<Signup signin={setSignin} usernick={setUsername} signinpw={setSigninPw}/>}/>
-        {/* <Route path="/mypage" element={myPageOpen}/> */}
+        <Route path="/" element={<Main isusername={username} loginResult={loginResult}/>}/>
+        <Route path="/login" element={<Login  signin={signin} signinPw={signinPw} setLoginResult={setLoginResult} loginResult={loginResult}/>}/>
+        <Route path="/signup" element={<Signup signin={setSignin} usernick={setUsername} signinpw={setSigninPw} loginResult={loginResult}/>}/>
+        <Route path="/mypage" element={<Mypage isusername={username}/>}/>
         <Route path="/notice" element={<Notice isusername={username}/>}/>
       </Routes>
     </div>

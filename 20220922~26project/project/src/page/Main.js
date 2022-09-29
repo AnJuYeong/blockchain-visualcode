@@ -1,11 +1,11 @@
 import React from 'react'
 import {Body, Header} from "../com";
 
-const Main = () => {
+const Main = ({loginResult}) => {
 
   return (
     <>
-    <Header></Header>
+    <Header loginResult={loginResult}></Header>
     <Body props="main-body"></Body>
     </>
   )

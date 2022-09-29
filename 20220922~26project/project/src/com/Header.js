@@ -3,15 +3,29 @@ import { FaAngry, FaUserAlt } from "react-icons/fa"
 import { Link,  } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({loginResult}) => {
+  let login = "";
+  if(loginResult == false){
+    login = "/";
+  }else{
+    login = "/mypage";
+  }
   let nav = useNavigate();
   let [list,setList] = useState("");
+  let menuList = [];
 
-  let menuList = [<li className='menu-list'><Link to={"/notice"} className='link'>게시판</Link></li>,
-            <li className='menu-list'><Link to={"/mypage"} className='link'>마이페이지</Link></li>,
-            <li className='menu-list'><Link to={"/signup"} className='link'>회원가입</Link></li>,
-            <li className='menu-list'><Link to={"/login"} className='link'>로그인</Link></li>];
-
+  if(loginResult == false){
+    menuList = [<li className='menu-list' key={1}><Link to={"/notice"} className='link'>게시판</Link></li>,
+    <li className='menu-list' key={2}><Link to={login} className='link'>마이페이지</Link></li>,
+    <li className='menu-list' key={3}><Link to={"/signup"} className='link'>회원가입</Link></li>,
+    <li className='menu-list' key={4}><Link to={"/login"} className='link'>로그인</Link></li>];
+  } else {
+    menuList = [<li className='menu-list' key={5}><Link to={"/notice"} className='link'>게시판</Link></li>,
+    <li className='menu-list' key={6}><Link to={login} className='link'>마이페이지</Link></li>,
+    <li className='menu-list' key={7}><Link to={"/signup"} className='link'>회원가입</Link></li>,
+    <li className='menu-list' key={8}><Link to={"/login"} className='link'>로그아웃</Link></li>]
+  }
+    
   function on() {
     if(list === ""){
       setList(menuList);
