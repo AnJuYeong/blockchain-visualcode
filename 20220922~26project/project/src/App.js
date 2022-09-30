@@ -6,9 +6,9 @@ import { useState } from 'react';
 function App() {
   // 회원가입시 유저 아이디와 유저 이름을 받을 useState
   let [username, setUsername] = useState("");
-  let [signin, setSignin] = useState(1);
-  let [signinPw, setSigninPw] = useState(1);
-
+  let [signin, setSignin] = useState("");
+  let [signinPw, setSigninPw] = useState("");
+  
   // let userData = {
   //   username : {
   //     id : signin,
@@ -24,11 +24,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Main isusername={username} loginResult={loginResult}/>}/>
+        <Route path="/" element={<Main username={username} loginResult={loginResult}/>}/>
         <Route path="/login" element={<Login  signin={signin} signinPw={signinPw} setLoginResult={setLoginResult} loginResult={loginResult}/>}/>
         <Route path="/signup" element={<Signup signin={setSignin} usernick={setUsername} signinpw={setSigninPw} loginResult={loginResult}/>}/>
-        <Route path="/mypage" element={<Mypage isusername={username}/>}/>
-        <Route path="/notice" element={<Notice isusername={username}/>}/>
+        <Route path="/mypage" element={<Mypage username={username}/>}/>
+        <Route path="/notice" element={<Notice username={username}/>}/>
       </Routes>
     </div>
   );

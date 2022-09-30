@@ -110,6 +110,7 @@
     bottom: 230px;
     left: 40%;
     color: white;
+    cursor: pointer;
 }
 /* 회원가입 */
 .signin-main{
