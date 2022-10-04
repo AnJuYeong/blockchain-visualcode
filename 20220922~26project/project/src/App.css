@@ -190,6 +190,16 @@
     text-decoration: none;
     color: #0095f6;
 }
+.bb{
+    position: relative;
+    width: auto;
+    height: auto;
+    top: 100px;
+    border: 1px solid ;
+}
+.cc{
+    list-style: none;
+}
 /* 폰트 */
 @font-face{
     font-family: "main";
