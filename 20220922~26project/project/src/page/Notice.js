@@ -1,28 +1,43 @@
 import React, { useState } from 'react'
 import { Header } from '../com'
 
-const Notice = ({username}) => {
+const Notice = ({name, loginResult, b,setb}) => {
 
-  const [title,setTitle] = useState();
-  const [contents,setContents] = useState();
-
+  const [title,setTitle] = useState("");
+  const [contents,setContents] = useState("");
   
-  const add = () => {
-    setTitle(title);
-    setContents(contents);
-    console.log(title);
-    console.log(contents);
+  const userTitle = (e) => {
+    setTitle(e.target.value);
   }
+  
+  const userContents = (e) => {
+    setContents(e.target.value);
+  }
+  
+  console.log(b);
+  const add = () => {
+    b.push(<li className='cc'>작성자: {name} 제목 :{title} 내용 :{contents}</li>);
+    setTitle("");
+    setContents("");
+  }
+
+
+
 
   return (
     <>
-    <Header/>
+    <Header loginResult={loginResult}></Header>
     <div>
       <div>
-      제목 <input type="text" value={title}/>
-      내용 <input type="text" value={contents}/>
-      <button onClick={add}>글 등록</button>
+      제목 <input type="text" onChange={userTitle} value={title}/>
+      내용 <input type="text" onChange={userContents}value={contents}/>
+      <button type="submit" onClick={add}>글 등록</button>
       </div>
+    </div>
+    <div className='bb'>
+      <ul className='cc'>
+      {b}
+      </ul>
     </div>
     </>
   )
