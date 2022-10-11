@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Header } from '../com'
 
-const Notice = ({name, loginResult, b,setb}) => {
+const Notice = ({name, isLogin, b}) => {
 
   const [title,setTitle] = useState("");
   const [contents,setContents] = useState("");
@@ -26,7 +26,6 @@ const Notice = ({name, loginResult, b,setb}) => {
 
   return (
     <>
-    <Header loginResult={loginResult}></Header>
     <div>
       <div>
       제목 <input type="text" onChange={userTitle} value={title}/>
