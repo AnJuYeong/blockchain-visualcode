@@ -1,14 +1,21 @@
 import './App.css';
 import {Routes, Route , Navigate, useNavigate} from 'react-router-dom';
+import { Header } from './com';
 import {Main, Login, Mypage, Notice, Signup} from './page';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+// import {loginAction, signUp} from "./middleware";
+import { loginAction } from './middleware/loginAction';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function App() {
+  // useDispatch사용
+  const dispatch = useDispatch();
   // useNavigate사용
-  let nav = useNavigate();
+  const nav = useNavigate();
 
-  // 회원가입하고 유저가 로그인하면 검증이 완료 됐다고 알려줄 useState
-  let [loginResult, setLoginResult] = useState(false);
+  // 로그인 되었을 때 로그인 판별 여부
+  const isLogin = useSelector(state => state.login.islogin);
 
   // 회원가입시 인풋값 useState
   const [input,setInput] = useState({
@@ -16,6 +23,7 @@ function App() {
     userId : '',
     userPw : '',
   });
+
   const {userName, userId, userPw} = input;
   // 회원가입시 유저 아이디와 유저 이름을 받을 useState
   const [users,setusers] = useState([
@@ -32,7 +40,6 @@ function App() {
       userPw : "asd",
     }
   ]);
-
   let next = useRef(3);
 
   const onChange = (e) => {
@@ -42,20 +49,20 @@ function App() {
     });
   }
   const onCreate = () =>{
+    
+    // const addUser = {
+    //   id : next.current++,
+    //   userName,
+    //   userId,
+    //   userPw,
+    // };
 
-    const addUser = {
-      id : next.current++,
-      userName,
-      userId,
-      userPw,
-    };
-
-    setusers([...users, addUser]);
-    setInput({
-      userName : "",
-      userId : "",
-      userPw : "",
-    })
+    // setusers([...users, addUser]);
+    // setInput({
+    //   userName : "",
+    //   userId : "",
+    //   userPw : "",
+    // })
   }
 
   // 로그인시 인풋값 useState
@@ -65,7 +72,6 @@ function App() {
   });
   const {loginId, loginPw} = loginput;
 
-  console.log(loginput);
   const loginOnChange = (e) => {
     setLogInput({
       ...loginput,
@@ -80,48 +86,39 @@ function App() {
   }
   
   const loginOn = () => {
-    console.log(loginput);
     const logUser = users.find(isLogUser)
-    if(logUser !== undefined){
-      setName(logUser.userName);
-      setLoginResult(true);
-      aa();
-      setLogInput({
-        loginId : '',
-        loginPw : '',
-      });
-    } else{
-      alert("아이디와 비밀번호가 틀립니다.");
-      setLogInput({
-        loginId : '',
-        loginPw : '',
-      });
-
-    }
+    dispatch(loginAction.logIn(loginId,loginPw,logUser,mainMove,inputset));
+    setName(logUser.userName);
   }
-const [name,setName] =useState("");
+
+  // input값 초기화 함수
+  function inputset(){
+    setLogInput({
+      loginId : '',
+      loginPw : '',
+    });
+  }
+
+  const [name,setName] =useState("");
   // 로그인시 메인페이지 이동
-  function aa(){
+  function mainMove(){
     nav("/");
   }
 
+  // 게시판 배열
   const [b,setb] = useState([
 
   ]);
 
   return (
     <div className="App">
+      <Header isLogin={isLogin}></Header>
       <Routes>
-        <Route path="/" element={<Main loginResult={loginResult}/>}/>
-        <Route path="/login" element={<Login loginId={loginId} loginPw={loginPw} loginOnChange={loginOnChange} loginOn={loginOn} loginResult={loginResult}/>}/>
-        <Route path="/signup" element={<Signup onChange={onChange} onCreate={onCreate} userName={userName} userId={userId} userPw={userPw} loginResult={loginResult}/>}/>
-        <Route path="/mypage" element={<Mypage name={name} loginResult={loginResult}/>}/>
-        <Route path="/notice" element={<Notice name={name} b={b} setb={setb} loginResult={loginResult}/>}/>
-        {/* <Route path="/" element={<Main username={username} loginResult={loginResult}/>}/>
-        <Route path="/login" element={<Login  signin={signin} signinPw={signinPw} setLoginResult={setLoginResult} loginResult={loginResult}/>}/>
-        <Route path="/signup" element={<Signup signin={setSignin} usernick={setUsername} signinpw={setSigninPw} loginResult={loginResult}/>}/>
-        <Route path="/mypage" element={<Mypage username={username}/>}/>
-        <Route path="/notice" element={<Notice username={username} onChange={onChange} onCreate={onCreate} username1={username1} email={email} users={users}/>}/> */}
+        <Route path="/" element={<Main/>}/>
+        <Route path="/login" element={<Login loginId={loginId} loginPw={loginPw} loginOnChange={loginOnChange} loginOn={loginOn}/>}/>
+        <Route path="/signup" element={<Signup onChange={onChange} onCreate={onCreate} userName={userName} userId={userId} userPw={userPw}/>}/>
+        <Route path="/mypage" element={<Mypage name={name}/>}/>
+        <Route path="/notice" element={<Notice name={name} b={b} setb={setb}/>}/>
       </Routes>
     </div>
   );

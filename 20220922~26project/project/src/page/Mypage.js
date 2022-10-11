@@ -1,11 +1,10 @@
 import React from 'react'
 import { Header } from '../com'
 
-const Mypage = ({name,loginResult}) => {
+const Mypage = ({name,isLogin}) => {
 
   return (
     <>
-    <Header loginResult={loginResult}></Header>
     <div>{name}님 페이지에요</div>
     </>
   )
