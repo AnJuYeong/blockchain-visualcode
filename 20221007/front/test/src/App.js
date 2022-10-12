@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <Header isLogin={isLogin}/>
-      {/* Routers가 스위치 역할 */}
+      {/* Routes가 스위치 역할 */}
       <Routes>
         {/* Route는 경로 페이지 띄우기 */}
         <Route path='/' element={<Main></Main>}/>
