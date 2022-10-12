@@ -1,0 +1,23 @@
+.main-logo{
+  display: flex;
+  align-items: center;
+  font-size: 35px;
+  font-family: "main";
+  cursor: pointer;
+}
+
+
+
+/* 폰트 */
+@font-face{
+  font-family: "main";
+  src: url("./font/Concert_One/ConcertOne-Regular.ttf");
+}
+@font-face {
+  font-family: "sub";
+  src: url("./font/cotra/KOTRA\ HOPE.ttf");
+}
+@font-face {
+  font-family: "kongz";
+  src: url("./font/Oswald/Oswald-VariableFont_wght.ttf");
+}
