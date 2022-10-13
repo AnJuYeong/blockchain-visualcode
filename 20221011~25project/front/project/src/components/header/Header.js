@@ -1,8 +1,13 @@
 import React from 'react'
 import {FaPeriscope, FaBell} from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 import { HeaderWrap, HeaderNav, NavContents, HeaderSignin, SigninBtn, NoticeBtn } from './styledComponent';
 
 const Header = () => {
+  const nav = useNavigate();
+  const signin = () => {
+    nav("signin");
+  }
   return (
     <div>
         <HeaderWrap>
@@ -17,7 +22,7 @@ const Header = () => {
             </HeaderNav>
             <HeaderSignin>
                 <NoticeBtn><FaBell size={"20px"}/></NoticeBtn>
-                <SigninBtn >Sign in</SigninBtn>
+                <SigninBtn onClick={signin}>Sign in</SigninBtn>
             </HeaderSignin>
         </HeaderWrap>
     </div>

@@ -3,5 +3,7 @@ import Drops from "./Drops";
 import Boad from "./Boad";
 import Maket from "./Maket";
 import Mypage from "./Mypage";
+import Signin from "./Signin";
+import Signup from "./Signup";
 
-export {Main,Drops,Boad,Maket,Mypage};
+export {Main,Drops,Boad,Maket,Mypage,Signin,Signup};

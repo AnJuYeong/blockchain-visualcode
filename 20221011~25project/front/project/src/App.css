@@ -1,11 +1,72 @@
+/* 헤더 메인 로고 */
 .main-logo{
   display: flex;
   align-items: center;
   font-size: 35px;
-  font-family: "main";
+  font-family: "hi";
   cursor: pointer;
 }
+/* 로그인 부분 */
+.main-login{
+  width: 100%;
+  height: calc(100vh - 100px);
+  background-color: #C8C8FF	;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-box{
+  width: 450px;
+  height: 400px;
+  position: absolute;
+}
+.login-input{
+  width: 100% ;
+  height: 60% ;
+  text-align: center;
+}
+.login-text{
+  font-family: "hi";
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+.login-ip{
+  width: 200px;
+  height: 30px;
+  margin-bottom: 5px;
+  font-family: "hi";
+  border: 1px solid;
+  border-radius: 10px;
+}
 
+.login-btn-box{
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-btn{
+  cursor: pointer;
+  width: 45%;
+  height: 45%;
+  font-family: "hi";
+  font-size: 30px;
+  background-color: 	#F4FFFF;
+  position: relative;
+  /* border: none; */
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  margin: 2px;
+}
+.login-btn :hover{
+  background-color: black;
+}
 
 
 /* 폰트 */
@@ -20,4 +81,8 @@
 @font-face {
   font-family: "kongz";
   src: url("./font/Oswald/Oswald-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "hi";
+  src: url("./font/hi/EF_Diary.ttf");
 }

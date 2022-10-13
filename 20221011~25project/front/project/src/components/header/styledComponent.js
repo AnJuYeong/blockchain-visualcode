@@ -11,12 +11,12 @@ const HeaderWrap = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-bottom: 1px solid;
 `
 const HeaderNav = styled.nav`
     display: flex;
 `
 const NavContents = styled.div`
+    font-family: "hi";
     font-weight: 400;
     font-size: 20px;
     height: 55px;
@@ -32,8 +32,10 @@ const NavContents = styled.div`
     }
 `
 const HeaderSignin = styled.div`
+    display: flex;
 `
 const SigninBtn = styled.button`
+    font-family: "hi";
     width: 100px;
     height: 40px;
     cursor: pointer;

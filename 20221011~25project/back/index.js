@@ -24,16 +24,21 @@
 
 const express = require("express");
 const cors = require("cors");
-const sequelize = require("sequelize");
-const mysql = require();
-const app =express();
+const {sequelize, user} = require("./sequelize");
+const app = express();
 
-// const options = {
-//     origin : ""
-// }
+const options = {
+    origin : "http://localhost:3000"
+}
 
-// app.use(express.json());
-// app.use(cors(options));
+app.use(express.json());
+app.use(cors(options));
+
+sequelize.sync({force : false}).then(()=> {
+    console.log("연결이 잘 됐다.");
+}).catch((err) => {
+    console.log(err);
+})
 
 app.listen(8000, ()=> {
     console.log("서버 열림ㅋ");
