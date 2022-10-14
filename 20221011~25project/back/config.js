@@ -2,7 +2,7 @@ const config = {
     dev : {
         username : "root",
         password : "1234",
-        database : "react_project",
+        database : "react",
         host : "127.0.0.1",
         dialect : "mysql"
     }

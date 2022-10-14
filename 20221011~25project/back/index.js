@@ -24,12 +24,12 @@
 
 const express = require("express");
 const cors = require("cors");
-const {sequelize, user} = require("./sequelize");
+const {sequelize, user} = require("./model");
 const app = express();
 
 const options = {
     origin : "http://localhost:3000"
-}
+};
 
 app.use(express.json());
 app.use(cors(options));
@@ -38,8 +38,36 @@ sequelize.sync({force : false}).then(()=> {
     console.log("연결이 잘 됐다.");
 }).catch((err) => {
     console.log(err);
-})
+});
+
+// 로그인
+app.post("/signIn", async(req,res) => {
+    let {id, pw} = req.body;
+    const users = await user.findOne({
+        where : {user_id : id, user_pw : pw}
+    })
+    console.log(users);
+});
+
+// 회원가입
+app.post("/signUp", async(req,res) => {
+    let {name, id, pw} = req.body;
+    const users = await user.findOne({
+        where : {user_id : id}
+    });
+    if(!users){
+        user.create({
+            user_name : name,
+            user_id : id,
+            user_pw : pw
+        }).then(() => {
+            res.send("가입 ㅊㅊㅋ");
+        })
+    } else{
+        res.send("중복 아이디가 있다 ㅋ");
+    }
+});
 
 app.listen(8000, ()=> {
     console.log("서버 열림ㅋ");
-})
+});
