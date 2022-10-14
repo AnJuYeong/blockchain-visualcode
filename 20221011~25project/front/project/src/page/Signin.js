@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
     const nav = useNavigate();
+    const dispatch = useDispatch();
+
+    const idInput = useRef();
+    const pwInput = useRef();
 
     const login = () => {
-        
         nav("/");
     }
     const signup = () => {
@@ -18,9 +22,9 @@ const Signin = () => {
         <div className='login-box'>
             <div className='login-input'>
                 <div className='login-text'>아이디</div>
-                <input className='login-ip'/>
+                <input ref={idInput} onChange={(e) => idInput.value = e.target.value} className='login-ip'/>
                 <div className='login-text'>비밀번호</div>
-                <input className='login-ip'/>
+                <input ref={pwInput} onChange={(e) => pwInput.value = e.target.value} className='login-ip'/>
             </div>
             <div className='login-btn-box'>
                 <button onClick={login} className='login-btn'>로그인</button>
