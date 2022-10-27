@@ -1,0 +1,310 @@
+.mian{
+  background-image: url("./img/메인.jpg");
+  width: 100%;
+  height: calc(100vh - 100px);
+  background-size: cover;
+}
+/* 헤더 메인 로고 */
+.main-logo{
+  display: flex;
+  align-items: center;
+  font-size: 35px;
+  font-family: "hi";
+  cursor: pointer;
+}
+/* 로그인 CSS */
+.main-login{
+  width: 100%;
+  height: calc(100vh - 100px);
+  background-color: #C8C8FF	;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-box{
+  width: 450px;
+  height: 400px;
+  position: absolute;
+}
+.login-input{
+  width: 100% ;
+  height: 60% ;
+  text-align: center;
+}
+.login-text{
+  font-family: "hi";
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+.login-ip{
+  width: 200px;
+  height: 30px;
+  margin-bottom: 5px;
+  font-family: "hi";
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.login-btn-box{
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-btn{
+  cursor: pointer;
+  width: 45%;
+  height: 45%;
+  font-family: "hi";
+  font-size: 30px;
+  background-color: 	#F4FFFF;
+  position: relative;
+  /* border: none; */
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  margin: 2px;
+}
+.login-btn :hover{
+  background-color: black;
+}
+/* ===================================================================== */
+/* 마이페이지 CSS */
+.mypage-header{
+  width: 100%;
+  height: 50px;
+  background-color: #FED140;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.mypage-header-contents{
+  font-family: "hi";
+}
+.mypage{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  /* background-color: ; */
+}
+.mypage-profile{
+  position: relative; 
+  right: 150px;
+  width: 17%;
+}
+.mypage-picture{
+  width: 100%;
+  height: 300px;
+  border: 1px solid;
+  border-radius: 50%;
+}
+.picture-btn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+.picture-change{
+  text-align: center;
+  cursor: pointer;
+  background-color: #FAFAD2;
+  border: 0.1px solid gray;
+  font-family: "hi";
+  margin-right: 10px;
+  width: 100px;
+  height: 20px;
+}
+.picture-none{
+  text-align: center;
+  cursor: pointer;
+  background-color: #FAFAD2;
+  border: 0.1px solid gray;
+  font-family: "hi";
+  margin-left: 10px;
+  width: 140px;
+  height: 20px;
+}
+.file-input{
+  display: none;
+}
+.mypage-contents{
+  border: 1px solid;
+  width: 60%;
+  height: 800px;
+}
+
+/* ===================================================================== */
+/* 게시판 CSS */
+/* 게시판 헤더 */
+.board-profile{
+  width: 100%;
+  height: 80px;
+  /* background-color: #FFE6EB; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "hi";
+}
+.create-btn{
+  padding: 15px 30px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-family: "hi";
+  cursor: pointer;
+  box-shadow: 5px 5px 5px;
+
+}
+/* ㅜ 글씨기용 */
+.board-header{
+  width: 100%;
+  height: 89.5vh;
+  background-color: #A0A0C8	;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "hi";
+}
+.board-header-title{
+  margin-top: 100px;
+}
+.board-input-title{
+  width: 40%;
+  height: 30px;
+  margin: 5px;
+  
+}
+.board-input-content{
+  width: 40%;
+  height: 350px;
+  margin: 10px;
+  font-family: "hi";
+  resize: none;
+}
+.board-btn{
+  width: 250px;
+  height: 100px;
+  padding: 10px 25px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-family: "hi";
+  margin-top: 20px;
+  cursor: pointer;
+  
+}
+/* ㅜ 게시판 포스트들 */
+.board-all{
+  background-color: #dcdcdc;
+  border-top:  2px solid;
+}
+.board-ul{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "hi";
+}
+.board-li{
+  margin: 15px;
+  width: 35%;
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid;
+  box-shadow: 5px 5px 5px 5px gray;
+
+}
+.posts-header{
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid;
+}
+.posts-content{
+  height: 300px;
+  display: flex;
+  padding-left: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid;
+}
+.posts-user{
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.posts-menu-icon{
+  cursor: pointer;
+  position: absolute;
+  left: 66%;
+}
+.posts-menu{
+  position: relative;
+  left: 11%;
+  top: 90%;
+}
+.posts-menu ul{
+  list-style: none;
+}
+.posts-menu ul li{
+  padding-bottom: 8px;
+}
+/* ㅜ 게시판 페이지네이션 버튼 */
+.board-page-btn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-family: "hi";
+  padding-bottom: 30px;
+}
+.board-count{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+.previous {
+  margin-right: 40px;
+  cursor: pointer;
+  font-size: 20px;
+} 
+.next{
+  margin-left: 40px;
+  cursor: pointer;
+  font-size: 20px;
+}
+.pageNationCount{
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+}
+/* 폰트 */
+@font-face{
+  font-family: "main";
+  src: url("./font/Concert_One/ConcertOne-Regular.ttf");
+}
+@font-face {
+  font-family: "sub";
+  src: url("./font/cotra/KOTRA\ HOPE.ttf");
+}
+@font-face {
+  font-family: "kongz";
+  src: url("./font/Oswald/Oswald-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "hi";
+  src: url("./font/hi/EF_Diary.ttf");
+}
