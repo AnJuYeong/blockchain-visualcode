@@ -120,6 +120,16 @@
   width: 100px;
   height: 20px;
 }
+.picture-set{
+  text-align: center;
+  cursor: pointer;
+  background-color: #FAFAD2;
+  border: 0.1px solid gray;
+  font-family: "hi";
+  margin-left: 10px;
+  width: 80px;
+  height: 20px;
+}
 .picture-none{
   text-align: center;
   cursor: pointer;
@@ -127,7 +137,7 @@
   border: 0.1px solid gray;
   font-family: "hi";
   margin-left: 10px;
-  width: 140px;
+  width: 120px;
   height: 20px;
 }
 .file-input{
@@ -246,7 +256,7 @@
 .posts-menu-icon{
   cursor: pointer;
   position: absolute;
-  left: 66%;
+  left: 66.5%;
 }
 .posts-menu{
   position: relative;
@@ -290,6 +300,24 @@
   cursor: pointer;
   font-size: 20px;
   margin-left: 10px;
+}
+/* 마켓플레이스 */
+.main-shop{
+  width: 80%;
+  position: relative;
+  left: 15%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nft-item{
+  width: 15%;
+  padding: 13px;
+  border: 1px solid;
+  height: 300px;
+  margin: 10px;
+  border-radius: 10%;
+  box-shadow: 5px 5px 5px 5px gray;
 }
 /* 폰트 */
 @font-face{

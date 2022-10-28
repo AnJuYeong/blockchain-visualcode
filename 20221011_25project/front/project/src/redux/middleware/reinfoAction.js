@@ -6,7 +6,7 @@ function profilePicture(formData, config){
     {
         const user =  await axios({
             method: 'post',
-            url:'http://localhost:8000/profil',
+            url:'http://localhost:8000/profile',
             data: formData,config
         }).then(()=>{
             alert("변경 완료");
@@ -17,8 +17,21 @@ function profilePicture(formData, config){
     }
 }
 
+function profileSet(imageSrc,userId){
+    return async(dispatch, getState) => {
+        const profile = await axios({
+            method : 'post',
+            url : 'http://localhost:8000/profileSet',
+            data : {imageSrc,userId}
+        }).then(()=>{
+            alert("변경 완료");
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+}
 
 
 
 
-export {profilePicture};
+export {profilePicture,profileSet};

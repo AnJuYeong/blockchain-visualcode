@@ -42,7 +42,7 @@ const Header = () => {
     <div>
         <HeaderWrap>
             <div onClick={main} className='main-logo'>
-            <FaPeriscope size={"35px"}/>JutaKongz
+            <FaPeriscope size={"35px"}/>주레이스댑
             </div>
             <HeaderNav>
                 <NavContents onClick={drops}>Drops</NavContents>
