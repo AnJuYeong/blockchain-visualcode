@@ -115,7 +115,7 @@ const storage = multer.diskStorage({
 })
 const  upload = multer({ storage: storage })
 
-app.post('/profil', upload.single("file"), async(req,res) =>{
+app.post('/profile', upload.single("file"), async(req,res) =>{
     const formData = req.body;
     console.log(formData);
     User.update({
@@ -125,10 +125,23 @@ app.post('/profil', upload.single("file"), async(req,res) =>{
         where : {
             user_id : formData.userId,
         }
-    }).then(()=>{
+    }).then(() => {
         res.send();
     })
 })
+
+app.post('/profileSet', async(req,res) => {
+    const {setProfile,userId} = req.body;
+    User.update({
+        user_picture : "https://static.nid.naver.com/images/web/user/default.png?type=s160"
+    },
+    {
+        where : {user_id : userId}
+    }).then(() => {
+        res.send();
+    })
+})
+
 
 app.listen(8000, ()=> {
     console.log("서버 열림ㅋ");
