@@ -20,4 +20,8 @@ User.init(sequelize);
 Board.init(sequelize);
 Nft.init(sequelize);
 
+User.associate(db);
+Nft.associate(db);
+Board.associate(db);
+
 module.exports = db;

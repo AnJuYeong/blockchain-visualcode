@@ -26,9 +26,13 @@ class Board extends Sequelize.Model{
             timestamps : true,
             modelName : "Board",
             tableName : "boards",
+            underscored : false,
             charset : "utf8",
             collate : "utf8_general_ci"
         })
+    }
+    static associate(db){
+        db.Board.belongsTo(db.User,{ foreignKey : "user_id", targetKey : "id"})
     }
 }
 

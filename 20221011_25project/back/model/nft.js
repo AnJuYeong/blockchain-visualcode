@@ -22,9 +22,13 @@ class Nft extends Sequelize.Model{
             timestamps : true,
             modelName : "Nft",
             tableName : "nfts",
+            underscored : false,
             charset : "utf8",
             collate : "utf8_general_ci"
         })
+    };
+    static associate(db){
+        db.Nft.belongsTo(db.User,{ foreignKey : "user_nft", targetKey : "id"})
     }
 }
 

@@ -78,7 +78,7 @@ app.get("/user",(req,res) => {
     // 조회를 하는데 전체를 조회해야 한다.
     // findAll 전체를 찾는다.
     User.findAll({}).then((e) => {
-      console.log(e);
+      console.log("gdgd"+e);
         res.render("page",{ data : e });
     }).catch(() => {
         res.render("err");
@@ -88,6 +88,7 @@ app.get("/user",(req,res) => {
 app.post("/create_post", (req,res) => {
     const {name, text} = req.body;
     console.log(name, text);
+    // console.log(text);
     // User테이블이랑 Post랑 연결되어있는데
     // User id 기본키로 되어있고 Post는 user_id
     // 테이블에서 하나의 컬럼 값 가져온다.(하나를 검색할 때 사용)
