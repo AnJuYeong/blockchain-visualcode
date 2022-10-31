@@ -30,9 +30,14 @@ class User extends Sequelize.Model{
             timestamps : true,
             modelName : "User",
             tableName : "users",
+            underscored : false,
             charset : "utf8",
             collate : "utf8_general_ci"
         })
+    };
+    static associate(db){
+        db.User.hasMany(db.Nft,{foreignKey : "user_nft", sourceKey : "id"})
+        db.User.hasMany(db.Board,{foreignKey : "user_id", sourceKey : "id"})
     }
 }
 

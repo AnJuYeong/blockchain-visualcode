@@ -84,10 +84,15 @@ app.post("/signUp", async(req,res) => {
 // 게시판
 app.post("/board", async(req, res) => {
     let {userName,titleInput,contentsInput} = req.body;
-    Board.create({
-        user : userName,
-        title : titleInput,
-        contents : contentsInput
+    User.findOne({
+        where : {user_name : userName}
+    }).then((e) => {
+        Board.create({
+            user : userName,
+            title : titleInput,
+            contents : contentsInput,
+            user_id : e.id
+        })
     })
 })
 app.post("/boardStart", async(req,res) => {
