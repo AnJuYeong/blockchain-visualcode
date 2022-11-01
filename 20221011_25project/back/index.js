@@ -147,6 +147,26 @@ app.post('/profileSet', async(req,res) => {
     })
 })
 
+// Drops페이지
+app.post('/nftCreate', async(req,res) => {
+    const item = req.body;
+    // 재귀함수를 사용해야한다.
+    item.map((el) => {
+        Nft.findOne({
+            where : {nft_name : el.name}
+        }).then((e) => {
+            if(!e){
+                console.log("zzzz")
+                Nft.create({
+                    nft_name : el.name,
+                    nft_img : el.img,
+                    nft_price : el.price
+                })
+            }
+        })
+    })
+})
+
 
 app.listen(8000, ()=> {
     console.log("서버 열림ㅋ");

@@ -4,7 +4,9 @@ import {Routes, Route, Navigate } from "react-router-dom";
 import {Main, Boad, Drops, Maket, Mypage, Signin, Signup, CreateBoard} from "./page";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import {boardAction} from "./redux/middleware"
+import {boardAction} from "./redux/middleware";
+import { nftAction } from './redux/middleware';
+import {nft} from "./json";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ function App() {
 
   // ㅜ 맨 처음 게시판 목록 가져오기
   useEffect(() => {
+    dispatch(nftAction.nftAdd(nft.data));
     dispatch(boardAction.boardStart());
   },[]);
   

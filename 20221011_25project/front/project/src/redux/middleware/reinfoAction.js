@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 function profilePicture(formData, config){
-    console.log(formData);
-    return async(dispatch, getState) =>
-    {
+    return async(dispatch, getState) => {
         const user =  await axios({
             method: 'post',
             url:'http://localhost:8000/profile',

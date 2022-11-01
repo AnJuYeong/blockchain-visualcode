@@ -12,7 +12,7 @@ class Nft extends Sequelize.Model{
                 type : Sequelize.STRING(20),
                 allowNull : false,
             },
-            user_name : {
+            nft_price : {
                 type : Sequelize.STRING(20),
                 allowNull : false,
             }
