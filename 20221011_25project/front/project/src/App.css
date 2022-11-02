@@ -1,5 +1,5 @@
 .mian{
-  background-image: url("./img/메인.jpg");
+  background-image: url("../public/img/메인.jpg");
   width: 100%;
   height: calc(100vh - 100px);
   background-size: cover;

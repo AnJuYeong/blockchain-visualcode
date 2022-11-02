@@ -1,5 +1,5 @@
 import React from 'react'
-import nft from "../json/nft"
+// import nft from "../json/nft"
 
 const Drops = () => {
   // const aa = nft.data.map((el) => {
