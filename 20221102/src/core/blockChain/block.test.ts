@@ -26,7 +26,7 @@ describe("Block 검증",() => {
         }
         expect(isValidBlock.isError).toBe(false);
     })
-});
+}); // 테스트 확인 
 
 // describe 함수를 사용해서 테스트할 거고 함수들을 많이 작성할 경우
 // 연관 테스트 함수끼리 그룹핑 시켜주는 역할
