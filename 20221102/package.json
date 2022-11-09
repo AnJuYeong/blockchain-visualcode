@@ -31,6 +31,7 @@
     "ws": "^8.11.0"
   },
   "scripts": {
-    "start": "ts-node ./src/core/wallet/server.ts"
+    "start": "ts-node ./wallet/server.ts",
+    "dev" : "ts-node ./index.ts"
   }
 }

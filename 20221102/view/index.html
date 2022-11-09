@@ -34,7 +34,7 @@
             <li>received : <input id="received" placeholder="보낼 계정"/> </li>
             <li>amount : <input id="amount" placeholder="보낼 금액"/></li>
         </ul>
-        <input type="text" value="전송">
+        <input type="submit" value="전송">
     </form>
     <h1>생성된 지갑 목록</h1>
     <button id="walletListBtn">지갑 목록 버튼</button>
@@ -58,17 +58,17 @@
 
     const submitHandler = async(e) => {
         e.preventDefault();
-        const publicKey = publicKey.innerHTML;
-        const account = account.innerHTML;
+        const _publicKey = document.querySelector('.publicKey').innerHTML;
+        const _account = document.querySelector('.account').innerHTML;
         const data = {
             sender : {
-                publicKey,
-                account
+                publicKey : _publicKey,
+                account : _account
             },
             received : e.target.received.value,
             amount : parseInt(e.target.amount.value),
         }
-
+        console.log(data);
         const response = await axios.post('/sendTransaction', data);
     }
 
@@ -79,9 +79,9 @@
         balance.innerHTML = wallet.balance;
     }
 
-    const getView = async() => {
+    const getView = async(account) => {
         // 계정 정보
-        const response = await axios.get(`/wallet${account}`);
+        const response = await axios.get(`/wallet/${account}`);
         view(response.data);
     }
 

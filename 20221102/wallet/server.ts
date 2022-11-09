@@ -36,7 +36,7 @@ const request = axios.create({
         // 유저의 아이디와 비밀번호를 base64형태로 인코딩한 문자열을 추가해서
         // 인증하는 방식 base64로 인코딩 되어 전송 되기 때문에 
         // 중간에 공격 취약하기는 하다..
-        Authorization : "Basic" + baseAuth,
+        Authorization : "Basic " + baseAuth,
         "Content-type" : "application/json"
     }
 });
@@ -51,6 +51,43 @@ app.post('/newWallet', (req,res) => {
     res.json(new Wallet());
 });
 
+app.post("/walletList", (req,res) => {
+    const list = Wallet.getWalletList();
+    res.json(list);
+});
+
+app.get("/wallet/:account", (req,res) => {
+    const {account} = req.params;
+    const privateKey = Wallet.getWalletPrivateKey(account);
+    res.json(new Wallet(privateKey));
+});
+
+app.post("/sendTransaction", async(req,res) => {
+    console.log(req.body);
+    const {
+        sender : {publicKey, getAccount},
+        received,
+        amount,
+    } = req.body;
+    // 서명 만들기
+    // 필요한 값은 SHA 256(보낸사람 : 공개키 + 받는 사람 : 계정 + 보낼금액)
+    const signature = Wallet.createSign(req.body)
+    
+    // 보낼 사람 : 공개키
+    // 받는 사람 : 계정, 서명
+    const txObject = {
+        sender : publicKey,
+        received,
+        amount,
+        signature,
+    }
+    
+    // 블록 체인 인터페이스 관리 HTTP 서버에 요청
+    const response = await request.post("/sendTransaction", txObject);
+    //console.log(response);
+    res.json({});
+})
+
 app.listen(4000, () => {
     console.log('서버 4000번에 열렸다.')
-})
+});
