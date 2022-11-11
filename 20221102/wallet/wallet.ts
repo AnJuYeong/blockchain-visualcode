@@ -13,14 +13,24 @@ const dir = path.join(__dirname, "../data");
 const ec = new elliptic.ec("secp256k1");
 
 export class Wallet{
+    // 지갑의 주소
     public account : string;
+    // 지갑의 개인키
     public privateKey : string;
+    // 지갑의 공개키
     public publicKey : string;
+    // 암호화폐
     public balance : number;
 
     constructor(privateKey : string = ""){
+        // 개인키가 전달
+        // 전달된 개인키가 있는지
+        // 지갑이 생성되어 있는지(있는 지갑인지?)
+        // 지갑이 없고 새로 생성할 때 getPrivateKey 함수를 통해서 개인키를 생성해준다.
         this.privateKey = privateKey || this.getPrivateKey();
+        // 공개키
         this.publicKey = this.getPubicKey();
+
         this.account = this.getAccount();
         this.balance = 0
         // fs 모듈을 사용해서 프로그램을 통해 지갑을 만들 때 개인키를 안전하게 저장하는게
@@ -33,8 +43,11 @@ export class Wallet{
     static createWallet(myWallet : Wallet){
         // fs 모듈을 이용해서 개인키를 저장할 파일 만들기
         // writeFileSync함수의 매개변수 첫번째 파일 이름 두번째 파일 내용
+        // 지갑의 주소를 파일 이름으로 data폴더 경로까지 내용
         const filenname = path.join(dir, myWallet.account);
+        // 파일의 내용은 해당 지갑의 개인키
         const filecontent = myWallet.privateKey;
+        // 파일 이름은 지갑의 주소 파일의 내용은 지갑의 개인키
         fs.writeFileSync(filenname,filecontent);
     }
 
@@ -46,10 +59,12 @@ export class Wallet{
         // 개인키를 공개키로 
         // 현재 개인키의 type은 문자열이고
         // elliptic로 해석을 가능하게 변환 작업
+        // 타원 곡선 알고리즘을 사용해서 공개키를 만들어준다.
         const keyPair = ec.keyFromPrivate(this.privateKey)
         return keyPair.getPublic().encode("hex",true);
     }
 
+    // 지갑의 목록 가져오기
     static getWalletList() : string[]{
         const files : string[] = fs.readdirSync(dir);
         return files;
@@ -59,16 +74,23 @@ export class Wallet{
     static getWalletPrivateKey(account : string) : string{
         const filepath = path.join(dir, account);
         // 해당 파일을 읽어옴
+        // data폴더에 만들어진 파일을 가져오고
         const filecontent = fs.readFileSync(filepath);
+        // 내용을 문자열로 반환
+        // 내용이 개인키
         return filecontent.toString();
     }
 
     static createSign(obj : any) : elliptic.ec.Signature{
+        // 객체로 공개키랑 주소를 sender에 전달하고
+        // received 보낼 계정
+        // amount 보낼 금액
         const {
             sender : {publicKey, account},
             received,
             amount
         } = obj;
+        // obj는 server.ts에서 전달 받는 값
         // 해싱
         // 합쳐서 해싱하고 문자열로 저장
         const hash : string = SHA256([publicKey, received, amount].join('')).toString();
@@ -79,10 +101,13 @@ export class Wallet{
         // 서명
         const KeyPair : elliptic.ec.KeyPair = ec.keyFromPrivate(privateKey);
 
+        // 서명을 만들어서 반환
         return KeyPair.sign(hash, "hex");
     }
 
+    // 지갑의 주소
     public getAccount() : string{
+        // Buffer에 있는 동안 바이너리 데이터를 조작할 수 있기  때문
         return Buffer.from(this.publicKey).slice(26).toString();
 
     }
