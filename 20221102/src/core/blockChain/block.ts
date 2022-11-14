@@ -14,11 +14,11 @@ export class Block extends BlockHeader implements IBlock{
     public merkleRoot: string;
     public nonce : number;
     public difficulty: number;
-    public data: string[];
+    public data: ITransaction[];
     // 생성 단계에 Block클래스 타입의 이전 블록을 매개변수로 받고,
     // 블록의 내용 _data
     // 10번째 전 블록 Block 클래스 타입인 _adjustmentBlock 
-    constructor(_previousBlock : Block, _data : string[], _adjustmentBlock : Block){
+    constructor(_previousBlock : Block, _data : ITransaction[], _adjustmentBlock : Block){
         // 부모 클래스 속성 가져와야하니깐 super사용
         super(_previousBlock);
         // 테스트쪽에서 생성할 때 블록의 문자열 데이터를 _data이 데이터를 getMerkleRoot함수 안에서
@@ -113,7 +113,7 @@ export class Block extends BlockHeader implements IBlock{
     }
 
     // 블록 추가
-    public static generateBlock(_previousBlock : Block, _data : string[], _adjustmentBlock : Block) : Block{
+    public static generateBlock(_previousBlock : Block, _data : ITransaction[], _adjustmentBlock : Block) : Block{
         const generateBlock = new Block(_previousBlock, _data, _adjustmentBlock);
         const newBlock = Block.findBlock(generateBlock);
         return newBlock;
