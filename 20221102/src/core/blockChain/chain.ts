@@ -1,40 +1,97 @@
 import { Block } from "@core/blockChain/block";
 import { DIFFICULTY_ADJUSTMENT_INTERVAL } from "@core/config";
+import { Transaction } from "@core/transaction/transaction";
+import { TxIn } from "@core/transaction/txin";
+import { TxOut } from "@core/transaction/txout";
+import { UnspentTxOut } from "@core/transaction/unspentTxOut";
 
 // 블록의 체인 
 export class Chain{
     // blockchain : Block배열의 타입을 가진 변수
     private blockchain : Block[];
+    private unspnetTxOuts : IUnspentTxOut[];
+    private transactionPool : ITransaction[];
     // 처음에 생성될 때 constructor로 클래스를 동적할당으로 생성 했을 때
     constructor(){
         // 최초의 블록은 거의 하드코딩으로 넣어준다.
         // 생성될 때 최초 블록 하나 추가 배열에 블록 체인에 최초 블록 추가
         this.blockchain = [Block.getGENESIS()];
-    }
+        // UTXO라는 배열을 만들어준 것
+        this.unspnetTxOuts = [];
+        // 
+        this.transactionPool = [];
+    };
+
+    // 트랜잭션 풀을 반환 해주는 함수
+    public getTransactionPool() : ITransaction[] {
+        return this.transactionPool;
+    };
+
+    // 트랜잭션 풀에 트랜잭션 추가 함수
+    public appendTransactionPool(transaction : ITransaction){
+        this.transactionPool.push(transaction);
+    };
+
+    // 트랜잭션 풀 업데이트
+    public updateTransactionPool(newBlock : IBlock){
+        let txPool : ITransaction[] = this.getTransactionPool();
+        newBlock.data.forEach((tx:ITransaction) => {
+            txPool = txPool.filter((txp) => {
+                txp.hash !== tx.hash;
+            })
+        })
+
+        this.transactionPool = txPool;
+    };
+
+    // UTXO get 함수 (UTXO 조회 함수)
+    public getUnspentTxOuts() : IUnspentTxOut[] {
+        return this.unspnetTxOuts;
+    };
+
+    // UTXO 추가 함수
+    public appendUTXO(utxo : IUnspentTxOut[]){
+        // unspentTxOuts배열에 utxo 값을 복사해서 배열에 추가
+        this.unspnetTxOuts.push(...utxo);
+    };
+
+    // 마이닝 블록
+    public miningBlock(account : string) : Failable<Block,string>{
+        // 코인베이스 트랜잭션의 내용을 임의로 만든 것
+        const txin : ITxIn = new TxIn("", this.getLatestBlock().height + 1, undefined);
+        const txout : ITxOut = new TxOut(account,50);
+        const coinbaseTransaction : Transaction = new Transaction([txin], [txout]);
+        // createUTXO 함수로 UTXO에 담을 객체를 만들어준 것
+        const utxo =  coinbaseTransaction.createUTXO();
+        // UTXO에 appnedUTXO함수로 만든 객체를 추가
+        this.appendUTXO(utxo);
+
+        return this.addBlock([coinbaseTransaction]);
+    };
 
     // 현재 연결된 블록들 리스트를 확인하기 위해 getChain함수로
     // 연결된 노드들을 확인할 수 있는 함수.
     public getChain() : Block[]{
         return this.blockchain;
-    }
+    };
 
     // 현재 연결된 블록들의 갯수 길이
     // 연결된 노드의 갯수
     public getLength() : number {
         return this.blockchain.length;
-    }
+    };
 
     // 맨 마지막 블록을 확인하는 함수
     // 맨 마지막 노드 확인
     public getLatestBlock() : Block {
         return this.blockchain[this.blockchain.length - 1];
-    }
+    };
 
     // 블록 체인에 블록을 추가하는 함수 매개변수로는 블록의 내용을 받는다
     // 반환 값으로는 Failable<Block,string> Block 타입이랑 string 타입을 반환 할 수 있는 함수
     // 반환 값은 객체이고 {isError : true, value : 여기 우리가 설정한 타입}
     // value라는 키 값이 Block 타입이나 stirng 타입을 허용한다.
-    public addBlock( data : string[] ) : Failable<Block,string>{
+    public addBlock( data : ITransaction[] ) : Failable<Block,string>{
         // getLatestBlock 함수로 마지막 블록을 가져오고
         const previousBlock = this.getLatestBlock();
         // getAdjustmentBlock 함수로 10번째 전 블록을 가져오고
@@ -53,7 +110,7 @@ export class Chain{
 
         // 에러가 없다고 알려주고 value로 Block 타입의 newBlock 반환
         return {isError : false, value : newBlock};
-    }
+    };
     // 체인 검증 코드
     // 매개변수로 Block 타입의 chain 배열을 매개변수로 받고
     // 블록 체인을 받고 
@@ -74,7 +131,7 @@ export class Chain{
         }
         // 다 통과하면 패스
         return {isError : false, value : undefined};
-    }
+    };
     // repalceChain 본인과 상대방의 체인을 검사하는 함수
     public replaceChain(receivedChain : Block[]) : Failable<undefined,string>{
         // 본인 체인과 상대방 체인을 검사하는
@@ -103,7 +160,7 @@ export class Chain{
 
         // 다 통과 했으니까 반환
         return {isError : false, value : undefined}
-    }
+    };
 
     // 생성 시점 기준으로 블록 높이 -10인 블록 구하기
 
@@ -119,6 +176,43 @@ export class Chain{
         this.blockchain[currentLength - DIFFICULTY_ADJUSTMENT_INTERVAL];
 
         return adjustmentBlock; //  최초 블록 or -10번째 블록 반환
-    }
+    };
 
+    updateUTXO(tx : ITransaction){
+        // txOutId, txOutIndex, account, amount
+        // UTXO 배열을 가져오고 getUnspentTxOuts함수를 사용해서 
+        const unspentTxOuts : UnspentTxOut[] = this.getUnspentTxOuts();
+        // UTXO에 추가할 unspentTxOuts 객체를 생성
+        // 트랜잭션 객체의 배열안에 있는 txOut 객체를 사용해서 새로 생성될
+        // UnspentTxOut 객체를 만들어준다. 
+        const newUnspentTxOuts = tx.txOuts.map((txout, index) => {
+            return new UnspentTxOut(tx.hash,index, txout.account, txout.amount);
+        })
+        // filter로 unspentTxOuts 배열 안에서 txㅐut객체들은 제거하고 생성된 
+        // newUnspentTxOuts 배열을 붙여준다.
+        const tmp = unspentTxOuts.filter((v1 : UnspentTxOut) => {
+            const bool = tx.txIns.find( (v2 : TxIn) => {
+                return v1.txOutId === v2.txOutId && v1.txOutindex === v2.txOutIndex;
+            })
+            // !undefined == true;
+            // !{} == false;
+            return !bool;
+        }).concat(newUnspentTxOuts);
+        // UTXO에 사용한 unspentTxOut 객체 제거와 생성된 unspentTxOuts 객체를 UTXO에 추가
+
+        // tmp 배열을 reduce 함수로 acc 배열 안에서 해당 조건에 맞는 값을 내보내주고
+        // acc 배열에 push해서 배열에 넣어주고 acc 배열을 반환해서
+        // unspentTmp에 담고
+        // unspentTmp를 this.unspentTxOuts에 바인딩 
+        let unspentTmp : UnspentTxOut[] = [];
+        const result = tmp.reduce((acc, utxo) => {
+            const find = acc.find(({txOutId, txOutindex}) => {
+                return txOutId === utxo.txOutId && txOutindex === utxo.txOutindex;
+            })
+            if(!find) acc.push(utxo);
+            return acc;
+
+        }, unspentTmp);
+        this.unspnetTxOuts = result;
+    };
 }
