@@ -193,3 +193,79 @@
 
 // 함수는 input에 대한 output의 발생을 목적으로 하고
 // 프로시저는 결과보다는 명령 단위가 수행하는 절차를 목적으로한다.
+
+// 2022-11-17------------------------------------------------------
+
+// 가나쉬에서 curl을 사용해서 요청을 보내고 확인하는 법
+// curl은 client URL
+
+// 클라이언트에서 소스 코드를 손 쉽게 웹 브라우저처럼 활용 할 수 있게 해주는 기술
+// 서버 통신 할 수 있는 커멘드 명령어 툴이다. 웹 개발에서 많이 사용되는 기술
+// 장점은 다양한 프로토콜을 지원 한다는 장점이 있다.
+// DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, SSL 등등
+
+// URL을 가지고 할 수 있는건 웬만하면 다 할 수 있다라고 보면 된다.
+// HTTP 프로토콜을 사용해서 페이지의 데이터를 가져온다거나 파일을 다운 받을 수도 있다.
+// curl [-option] 페이지 주소 쓰면 페이지의 소스가 화면에 출력된다.
+
+// npx ganache-cli로 가나쉬 실행 시켜 놓고
+// curl -X POST -H "content-type : application/json" --data "{id : juyeong}" http://localhost:3000
+
+// -X 요청 메소드
+// -H 요청 헤더 내용
+// -data. -d 요청 바디 내용 작성
+
+// 가나쉬로 생성한 이더리움 클라이언트에
+// curl을 사용해서 RPC요청을 보내보자
+// request body의 내용
+// {
+//  "id" : 1215 // 체인의 아이디, 있어도 되고 없어도 된다.
+//  "jsonrpc" : "2.0" //  json으로 인코딩한 프로시저 호출 // 필수
+//  "method" : "eth_accounts", // 이더리움 클라이언트에 구성되어 있는 메소드 명 // 필수
+//  "params" : [] // 메소드의 인자 값
+// }
+
+// 계정을 가져오기
+// curl -X POST -H "Content-type : application/json" --data '{ "jsonrpc" : "2.0", "method" : "eth_accounts", "params" : [] }' http://localhost:8545
+
+// curl -X POST -H "content-type : application/json" --data '{"jsonrpc" : "2.0","method" : "eth_accounts"}' http://localhost:8545
+// curl -X POST -H "content-type : application/json" --data "{\"jsonrpc\" : \"2.0\",\"method\" : \"eth_accounts\"}" http://localhost:8545
+
+// wsl에 node 설치하고 가나쉬 설치
+
+// sudo apt update
+// sudo apt install nodejs
+// nodejs -v
+// sudo apt install npm
+
+// npm install -g ganache-cli
+// 가나쉬 실행
+// npx ganache-cli
+
+// 잔액을 조회하기
+
+// 잔액을 조회하는 함수 이름은 "eth_getBalance"
+// "eth_getBalance" 함수는 params로 매개변수 2개를 전달하고
+// 첫번째는 계정의 주소
+// 두번째는 몇번째 블록을 조회할 것인지
+
+// curl -X POST -H "Content-type : application/json" --data '{"jsonrpc" : "2.0", "method" : "eth_getBalance", "params" : ["0xb0da730cc19403922ed616788a54b23297869cc4","latest"]}' http://localhost:8545
+// curl -X POST -H "Content-type:application/json" --data '{"jsonrpc" : "2.0","method" : "eth_getBalance", "params" : ["0xf80F0c949AFB9028315AF2fC0f1F0beD5Fb5D581","latest"]}' http://localhost:8545
+
+// 이더리움 클라이언트에게 RPC를 요청 보내는 방법이다.
+
+// Web3 라이브러리
+// Web3.js라는 라이브러리를 제공 받아서 이더리움 네트워크와 상호작용을 할 수 있는 다양한 함수들
+// 제공 받아 사용할 수 있다.
+// 위에서 해본 RPC요청을 쉽게 보낼 수 있게 해주는 라이브러리
+
+// npm init -y
+// npm install -D jest
+// npm install web3
+
+// package.json
+// "test" : "jest"로 변경
+// jest.config.js 파일 생성
+
+// ethereumjs-tx 라이브러리 설치
+// npm install ethereumjs-tx
