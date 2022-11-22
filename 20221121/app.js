@@ -200,3 +200,38 @@ const genesis = {
 
 // 터미널에 wsl 하나더 열어서
 // geth attach http://127.0.0.1:9000
+
+// 계정 만들기
+// personal.newAccount()
+
+// 코인베이스 계정으로 채굴하기
+
+// 코인베이스 계정을 마이너로 설정
+// miner.setEtherbase(eth.accounts[0]);
+
+// miner.start(1);
+// start(갯수는 스레드 갯수)
+// 스레드는 일하는 사람의 수(인력 수)
+
+// 마이닝 스탑
+// miner.stop();
+
+
+// 코인베이스 계정의 채굴한 잔고 확인 해보자
+// eth.getBalance(eth.accounts[0])
+
+// 이더리움으로 숫자 변환해서 확인
+// web3.fromWei(eth.getBalance(eth.accounts[0]),"ether")
+
+// 코인 베이스 계정의 잔고에서 트랜잭션을 보내서 잔고를 보내보자
+// eth.sendTransaction({from : eth.accounts[0], to : eth.accounts[1], value : web3.toWei(10,"ether")});
+
+// 계정 잠금 해제하고 실행
+// geth --datadir node --http --allow-insecure-unlock --http.addr "127.0.0.1" --http.port 9000 --http.corsdomain "*" \--http.api "admin,miner,txpool,web3,personal,eth,net" --syncmode full --networkid 7722
+
+// 계정 잠금 해제 명령어
+// personal.unlockAccount(eth.accounts[0])
+
+// 트랜잭션을 보내면 txpool 트랜잭션 풀에 먼저 들어오고
+// 아직 트랜잭션이 pending 상태로 들어있고
+// 마이닝을 실행하면 트랜잭션 풀에서 트랜잭션이 처리가 된다.
