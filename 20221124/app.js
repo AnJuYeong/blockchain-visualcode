@@ -31,3 +31,4 @@
 //    new client.web3.eth.Contract 함수로 조회를 하고
 //    매개변수로 첫 번째 값이 abi 두 번째 값이 contract address
 //    함수로 반환 받은 값을 가지고 컨트랙트 메소드나 상태 변수를 가져오고 사용할 수 있다.
+
