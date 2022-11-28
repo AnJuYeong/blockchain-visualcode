@@ -9,11 +9,11 @@ contract Counter{
         return _count;
     }
 
-    function incremoent() public{
+    function increment() public{
         _count += 1;
     }
 
-    function decremoent() public{
+    function decrement() public{
         _count -= 1;
     }
 }
