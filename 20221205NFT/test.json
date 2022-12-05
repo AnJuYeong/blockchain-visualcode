@@ -1,0 +1,15 @@
+{
+    "name": "Donkkaseu NFT",
+    "description": "jong NFT",
+    "image": "https://gateway.pinata.cloud/ipfs/QmYs1b4zaStS1Q4XyvUQdsfFqWcAaYA7SK7iucLD5512W3",
+    "attributes": [
+      {
+        "trait_type": "Rank",
+        "value": 1
+      },
+      {
+        "trait_type": "Type",
+        "value": 1
+      }
+    ]
+  }
