@@ -20,7 +20,7 @@ function App() {
   useEffect(()=>{
     const init = async()=>{
       const balance = await web3?.eth.getBalance(account);
-      setBalnace(balance / 10 ** 10 )
+      setBalnace(balance / 10 ** 18  )
     }
     if(account)
     setIsLogin(true)
