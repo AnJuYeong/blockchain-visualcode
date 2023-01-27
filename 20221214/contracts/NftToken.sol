@@ -10,7 +10,7 @@ import "../node_modules/openzeppelin-solidity/contracts/access/Ownable.sol";
 import "../node_modules/openzeppelin-solidity/contracts/utils/Strings.sol";
 // Strings.sol
 // uint를 형변환 할때 바로 형변환이 되지 않아서.
-// uint를 바이트로 변환하고 문자열로 변환 해주는 함수를 사용할수 있다.
+// uint를 바이트로 변환하고 문자열로 변환 해주는 함수를 사용할수 있다.  
 
 contract NftToken is ERC721Enumerable, Ownable{
 
